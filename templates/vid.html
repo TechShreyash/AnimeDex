@@ -13,7 +13,7 @@
         body {
             background-color: #000;
         }
-        
+
         #player {
             position: absolute;
             width: 100% !important;
@@ -33,10 +33,10 @@
                 title: "{{ title }}",
                 description: "You're Watching",
                 sources: [{
-                        file: "{{ m3u8 }}",
-                        label: "hls P",
-                        "image": "/static/d5VEIYs.jpg",
-                    },
+                    file: "{{ m3u8 }}",
+                    label: "hls P",
+                    "image": "/static/d5VEIYs.jpg",
+                },
 
                 ],
                 TRACKS
@@ -59,8 +59,8 @@
 
         let player_url = "{{ m3u8 }}"
         player = playerInstance
-        player.on('error', function() {
-            debounce = setTimeout(function() {
+        player.on('error', function () {
+            debounce = setTimeout(function () {
                 if (errors < 5) {
                     errors += 1
                     isRun = false
@@ -76,7 +76,7 @@
         let isRun = true
         let errors = 0
 
-        player.on('firstFrame', function() {
+        player.on('firstFrame', function () {
             player.seek(position);
             isRun = true
         });

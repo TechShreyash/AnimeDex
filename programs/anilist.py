@@ -55,3 +55,13 @@ class Anilist:
                 if id:
                     break
         return data
+
+    def search(query):
+        for host in hosts:
+            data = requests.get(host + 'meta/anilist/' + query)
+            if data.status_code == 200:
+                data = data.json()
+                results = data.get('results')
+                if results:
+                    break
+        return results

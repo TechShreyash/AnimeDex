@@ -26,7 +26,7 @@ class GoGoApi:
             results = []
             for i in animes:
                 url = i.find('a').get('href').replace('/category/', '')
-                results.append(url)                
+                results.append(url)
             return results
 
     def home(self):
@@ -37,21 +37,23 @@ class GoGoApi:
 
         results = []
         for i in animes:
-            url = '/anime' + i.find('a').get('href').replace('/category/', '').split('-episode-')[0]
+            url = '/anime' + \
+                i.find('a').get('href').replace(
+                    '/category/', '').split('-episode-')[0]
             img = i.find('img').get('src')
-            lang = i.find('div', 'type').get('class')[1].replace('ic-','')
+            lang = i.find('div', 'type').get('class')[1].replace('ic-', '')
             title = i.find('a').get('title')
-            episode = i.find('p', 'episode').text.replace('Episode','')
+            episode = i.find('p', 'episode').text.replace('Episode', '')
             results.append(
-                    Anime(url, img, lang, title, episode)
-                )
+                Anime(url, img, lang, title, episode)
+            )
         return results
-    
-    def get_episodes(self,anime):
+
+    def get_episodes(self, anime):
         soup = bs(requests.get(
             f'https://{self.host}/category/{anime}').content, 'html.parser')
 
-        ep = soup.find('a','active').get('ep_end')
+        ep = soup.find('a', 'active').get('ep_end')
         return int(ep.strip())
 
     def get_links(self, anime, episode):

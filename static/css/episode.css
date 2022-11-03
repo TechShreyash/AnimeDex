@@ -9,6 +9,33 @@ header {
     width: 100%;
 }
 
+footer {
+    background: #eb3349;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+footer div{
+    text-align: center
+}
+footer a {
+
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    
+}
+@media only screen and (min-width: 400px) {footer a{
+    font-size: 13px;
+}}
+@media only screen and (min-width: 600px) {footer a{
+    font-size: 15px;
+}}
+
 #head-div {
     background: linear-gradient(to right, #eb3349 40%, #f45c43);
     width: 100%;
@@ -156,16 +183,19 @@ div {
 }
 
 @media only screen and (min-width: 600px) {
-     ::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         width: 5px;
     }
-     ::-webkit-scrollbar-track {
+
+    ::-webkit-scrollbar-track {
         background: #f1f1f100;
     }
-     ::-webkit-scrollbar-thumb {
+
+    ::-webkit-scrollbar-thumb {
         background: #888;
     }
-     ::-webkit-scrollbar-thumb:hover {
+
+    ::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
 }
@@ -236,15 +266,18 @@ div {
     #search-div input {
         width: calc(100% - 55px);
     }
+
     .head-div {
         padding-top: 25px;
         width: 100%;
     }
+
     #title1 {
         height: fit-content;
         width: 100%;
         text-align: center;
     }
+
     #search-div {
         height: fit-content;
         background-color: white;
@@ -252,6 +285,7 @@ div {
         border-radius: 5px;
         height: 40px;
     }
+
     #search-div input {
         height: 28px;
         background-color: rgba(255, 255, 255, 0);
@@ -263,34 +297,41 @@ div {
         overflow: visible;
         font-family: 'Montserrat', sans-serif;
     }
+
     #search-div button {
         background-color: rgba(255, 255, 255, 0);
         border: none;
         height: 40px;
         width: 40px;
     }
+
     #search-div button i {
         width: 16px;
         height: 16px;
         margin: 0px;
     }
+
     #search-div form {
         vertical-align: middle;
         height: 100%;
         width: 100%;
     }
+
     #query {
         width: 200px;
         height: 40px;
     }
+
     #query:focus {
         border: none;
     }
+
     #title1 {
         height: fit-content;
         width: calc(100% - 247px);
         text-align: center;
     }
+
     #search-div {
         position: absolute;
         right: 0px;
@@ -304,6 +345,7 @@ div {
         width: calc(100% - 50px);
         text-align: center;
     }
+
     #search-div {
         position: absolute;
         right: 0px;

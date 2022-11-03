@@ -6,4 +6,4 @@ lxml
 cssselect
 regex
 yarl
-pycryptodome
+pycryptodomex

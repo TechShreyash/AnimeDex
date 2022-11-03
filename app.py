@@ -1,31 +1,19 @@
-
-import time
-from programs.cache import HOME
-from programs.gogoScrapper import GoGoApi
-GOGO = GoGoApi()
-from programs.others import get_atitle, get_other_title, get_studios, get_t_from_u
-from programs.anilist import Anilist
-
+from programs.html_gen import animeRecHtml, episodeHtml, get_eps_html, get_recent_html, get_search_html, get_selector_btns, get_genre_html, get_trending_html, slider_gen
 from flask import Flask, render_template, request, redirect
-from programs.html_gen import animeRecHtml, episodeHtml, get_eps_html, get_recent_html, get_selector_btns, get_genre_html, get_trending_html, slider_gen
-import random
+from programs.anilist import Anilist
+from programs.others import get_atitle, get_other_title, get_studios, get_t_from_u
+from programs.gogo import GoGoApi
+GOGO = GoGoApi()
+
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():
-    t1 = time.time()
-    t2 = HOME.get('time')
-    cache = HOME.get('cache')
-    if t2 and cache:
-        if ((t1-t2)/60) < 10:
-            return cache
-
     html = render_template('home.html')
     div1 = get_trending_html()
     div2 = get_recent_html(GOGO.home())
-
-    sliders = slider_gen()
+    sliders, slider = slider_gen()
 
     html = html.replace(
         'MOST_POPULAR',
@@ -37,8 +25,6 @@ def hello_world():
         'SLIDERS',
         sliders
     )
-    HOME['time'] = t1
-    HOME['cache'] = html
     return html
 
 
@@ -67,14 +53,11 @@ def get_embed():
     return render_template('vid.html', m3u8=file, title=title).replace('TRACKS', track)
 
 
-
-
 @app.route('/episode/<anime>/<episode>')
 def get_episode(anime, episode):
     search = GOGO.search(anime, True)
     eps = GOGO.get_links(search[0], episode)
-    # sl, cur = get_selector_btns(
-    #      f"/episode/{anime}/", episode, len(eps))
+    
     ep_html, iframe = episodeHtml(eps, f'{anime} - Episode {episode}')
 
     temp = render_template(
@@ -115,7 +98,7 @@ def get_anime(anime):
                            ATYPE=data.get('type'),
                            status=data.get('status'),
                            animeURL=f'/anime/{anime}',
-                           WATCHNOW=f'/episode/{anime}',
+                           WATCHNOW=f'/episode/{anime}/1',
                            aid=anime
                            )
 
@@ -132,8 +115,9 @@ def search_anime():
 
     html = render_template('search.html',
                            aid=anime.replace('+', ' '))
-    data = searchScrapper(anime)
-    display = anime_display_html(data)
+
+    data = Anilist.search(anime)
+    display = get_search_html(data)
 
     html = html.replace(
         'SEARCHED',
@@ -142,5 +126,5 @@ def search_anime():
     return html
 
 
-if __name__ == '__main__':
-    app.run('0.0.0.0')
+# if __name__ == '__main__':
+#     app.run('0.0.0.0')

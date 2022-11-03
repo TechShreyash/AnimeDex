@@ -1,5 +1,5 @@
 import random
-from programs.gogoScrapper import Anime, GoGoApi
+from programs.gogo import Anime, GoGoApi
 from programs.others import get_atitle, get_genre, get_urls
 from programs.anilist import Anilist
 
@@ -52,7 +52,7 @@ def animeRecHtml(data):
         title = get_atitle(i.get('title'))
         url = get_urls(title)
         x = ANIME_POS.format(
-            url+'/1',
+            url,
             str(i.get('rating')).strip()+' / 100',
             'Ep '+str(i.get('episodes')).strip(),
             i.get('image').replace('large', 'medium'),
@@ -67,6 +67,25 @@ def animeRecHtml(data):
 
 def get_trending_html():
     data = Anilist.popular()
+    html = ''
+
+    for i in data:
+        title = get_atitle(i.get('title'))
+        url = get_urls(title)
+        x = ANIME_POS.format(
+            url,
+            get_genre(i.get('genres')),
+            'Ep '+str(i.get('totalEpisodes')).strip(),
+            i.get('image').replace('large', 'medium'),
+            title,
+            i.get('type'),
+            i.get('status')
+        )
+        html += x
+
+    return html
+
+def get_search_html(data):
     html = ''
 
     for i in data:
@@ -180,8 +199,9 @@ SLIDER_HTML = """<div class="mySlides fade">
             </div>"""
 
 
-def slider_gen():
-    data = Anilist.trending()
+def slider_gen(data = None):
+    if not data:
+        data = Anilist.trending()
     random.shuffle(data)
     html = ''
     pos = 1
@@ -204,7 +224,7 @@ def slider_gen():
         )
         html += temp
         pos += 1
-    return html
+    return html,data
 
 
 def episodeHtml(episode, title):
