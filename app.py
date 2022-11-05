@@ -34,7 +34,7 @@ def get_embed():
     if url and '.m3u8' not in url:
         return redirect(url)
 
-    if '.m3u8' in url:
+    if '.m3u8' in url or '.mp4' in url or '.mkv' in url:
         file = url
     else:
         file = request.args.get('file')
