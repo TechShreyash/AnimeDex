@@ -81,7 +81,7 @@ def get_anime(anime):
     synopsis = data.get('description')
     names = get_other_title(data.get('title'))
     studios = get_studios(data.get('studios'))
-    episodes = 'Ep ' + str(data.get('totalEpisodes'))
+    episodes = str(data.get('totalEpisodes'))
     genres = get_genre_html(data.get('genres'))
     displayAnime = animeRecHtml(data.get('recommendations'))
     ep_html = get_eps_html(anime, title)
