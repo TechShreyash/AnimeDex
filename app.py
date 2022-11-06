@@ -55,6 +55,7 @@ def get_embed():
 
 @app.route('/episode/<anime>/<episode>')
 def get_episode(anime, episode):
+    anime = get_t_from_u(anime)
     search = GOGO.search(anime, True)
     eps = GOGO.get_links(search[0], episode)
     
