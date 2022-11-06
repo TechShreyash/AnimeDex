@@ -10,16 +10,23 @@
 - Built With Flask In Python
 - Uses Anilist To Get Data
 - And GoGo Anime For Episodes
-- Can Be Deployed To Vercel.com
+- Can Be Deployed To Vercel.com And Repl.it
 
 <hr>
 
 ### ⚡️ Deploy Your Own
 
-- ❤️ Demo : https://anime-dex1.vercel.app
 - Click Below To Deploy On Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex&project-name=anime-dex&repo-name=anime-dex&demo-title=AnimeDex&demo-description=Watch%20Animes%20Online%20For%20Free&demo-url=https%3A%2F%2Fanime-dex1.vercel.app%2F&demo-image=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex%2Fraw%2Fmain%2Fstatic%2Fhome.png)
+> [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex&project-name=anime-dex&repo-name=anime-dex&demo-title=AnimeDex&demo-description=Watch%20Animes%20Online%20For%20Free&demo-url=https%3A%2F%2Fanime-dex1.vercel.app%2F&demo-image=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex%2Fraw%2Fmain%2Fstatic%2Fhome.png)
+
+> Demo : https://anime-dex1.vercel.app
+
+- Deploy To Repl.it
+
+> Just Fork This Repl To Your Account : https://replit.com/@ShreyashDheemar/AnimeDex
+
+> Demo : https://animedex.shreyashdheemar.repl.co
 
 <hr>
 
