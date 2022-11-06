@@ -29,7 +29,7 @@ def get_crypto(url):
     function to get crypto data
     '''
     r = requests.get(url)
-    soup = bs(r.content, 'lxml')
+    soup = bs(r.content, 'html.parser')
     for item in soup.find_all('script', attrs={'data-name': 'episode', 'data-value': True}):
         crypto = str(item['data-value'])
     return crypto

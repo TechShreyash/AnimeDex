@@ -125,34 +125,26 @@ def get_recent_html(data):
     return html
 
 
-def get_selector_btns(anime, current, episodes: list):
-    ids = []
-    for i in episodes:
-        ids.append(i['id'])
-
-    li = ids
-
-    if len(li) < 2:
+def get_selector_btns(url, current, episodes: list):
+    if episodes < 2:
         return '', 0
 
-    index = li.index(current)
     selector = ''
-    a = int(len(li)-1)
 
-    if int(index) == 0:
+    if current == 1:
         x = """<a class="btns" href="usrl"><button
                     class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
 
-        selector += x.replace('usrl', anime +
-                              episodes[1]['id']).replace('NEXT', str(episodes[1]['number']))
+        selector += x.replace('usrl', url +
+                              str(current+1)).replace('NEXT', str(current+1))
 
-    elif int(index) == a:
+    elif current == episodes:
         x = """<a class="btns" href="usrl"><button
                     class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i
                         class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
 
-        selector += x.replace('usrl', anime + episodes[index-1]['id']).replace(
-            'PREV', str(episodes[index-1]['number']))
+        selector += x.replace('usrl', url + str(current-1)).replace(
+            'PREV', str(current-1))
 
     else:
         x = """<a class="btns" href="usrl"><button
@@ -160,14 +152,14 @@ def get_selector_btns(anime, current, episodes: list):
                         class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
 
         selector += x.replace('usrl',
-                              anime + episodes[index-1]['id']).replace('PREV', str(episodes[index-1]['number']))
+                              url + str(current-1)).replace('PREV', str(current-1))
 
         x = """<a class="btns" href="usrl"><button
                     class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
 
         selector += x.replace('usrl',
-                              anime + episodes[index+1]['id']).replace('NEXT', str(episodes[index+1]['number']))
-    return selector, index
+                              url + str(current+1)).replace('NEXT', str(current+1))
+    return selector
 
 
 SLIDER_HTML = """<div class="mySlides fade">
