@@ -2,7 +2,6 @@ gunicorn
 requests
 bs4
 flask
-lxml
 cssselect
 regex
 yarl
