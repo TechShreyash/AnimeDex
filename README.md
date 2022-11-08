@@ -1,6 +1,6 @@
-<p align="center"><a href="https://github.com/TechShreyash/AutoAnimeBot"><img src="./static/home.png"></a></p> 
+<p align="center"><a href="https://github.com/TechShreyash/AutoAnimeBot"><img src="./static/img/home.png"></a></p> 
 
-<h1 align="center"><img src="./static/headerr.png"></h1>
+<h1 align="center"><img src=".https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/headerr.png"></h1>
 <h2 align="center"><b>Watch Animes Online For Free</b></h4>
 
 <p align="center" > <img alt="GitHub Forks" src="https://img.shields.io/github/forks/TechShreyash/AnimeDex?label=%F0%9F%8D%B4Forks&logoColor=blue&style=social"> <img alt="GitHub Repo Stars" src="https://img.shields.io/github/stars/TechShreyash/AnimeDex?label=%E2%AD%90%EF%B8%8FStars&logoColor=blue&style=social"></p>
@@ -8,6 +8,7 @@
 <hr>
 
 - Built With Flask In Python
+- Fast And Responsive
 - Uses Anilist To Get Data
 - And GoGo Anime For Episodes
 - Can Be Deployed To Vercel.com And Repl.it
@@ -32,7 +33,7 @@
 
 ### 📸 Screenshots
 
-<img src="./static/home.png">
+<img src="./static/img/home.png">
 
 <img src="./screenshots/search.png">
 
