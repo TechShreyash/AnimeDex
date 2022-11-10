@@ -28,6 +28,17 @@ class GoGoApi:
                 url = i.find('a').get('href').replace('/category/', '')
                 results.append(url)
             return results
+        else:
+            results = []
+            for i in animes:
+                url = i.find('a').get('href').replace('/category/', '')
+                img = i.find('img').get('src')
+                title = i.find('p','name').text
+                released = i.find('p','released').text
+                results.append(
+                    Anime(url,img,released,title,None)
+                )
+            return results
 
     def home(self):
         soup = bs(requests.get(

@@ -31,13 +31,31 @@ ANIME_POS = """
                             <div class="dubb dubb2">{}</div>
                         </div>
                         <div id="shadow2" class="shadow">
-                        <img class="lzy_img" src="../static/loading.gif" data-src="{}">
+                        <img class="lzy_img" src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/loading.gif" data-src="{}">
                     </div>
                     <div class="la-details">
                         <h3>{}</h3>
                         <div id="extra">
                         <span>{}</span>
                         <span class="dot"></span>
+                        <span>{}</span>                        
+                        </div>
+                    </div>
+                </div></a>
+"""
+
+ANIME_POS2 = """
+<a href="{}"><div class="poster la-anime">
+                    <div id="shadow1" class="shadow">
+                            <div class="dubb">{}</div>
+                        
+                        </div>
+                        <div id="shadow2" class="shadow">
+                        <img class="lzy_img" src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/loading.gif" data-src="{}">
+                    </div>
+                    <div class="la-details">
+                        <h3>{}</h3>
+                        <div id="extra">                        
                         <span>{}</span>                        
                         </div>
                     </div>
@@ -85,20 +103,20 @@ def get_trending_html():
 
     return html
 
-def get_search_html(data):
+def get_search_html(data:Anime):
     html = ''
 
     for i in data:
-        title = get_atitle(i.get('title'))
-        url = get_urls(title)
-        x = ANIME_POS.format(
-            url,
-            get_genre(i.get('genres')),
-            'Ep '+str(i.get('totalEpisodes')).strip(),
-            i.get('image').replace('large', 'medium'),
-            title,
-            i.get('type'),
-            i.get('status')
+        if 'dub' in i.url.lower():
+            d = 'DUB'
+        else:
+            d = 'SUB'
+        x = ANIME_POS2.format(
+            '/anime/'+i.url,
+            d,
+            i.img,
+            i.title,
+            i.lang,
         )
         html += x
 
