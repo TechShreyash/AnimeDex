@@ -210,7 +210,7 @@ SLIDER_HTML = """<div class="mySlides fade">
             </div>"""
 
 
-def slider_gen(data):
+def slider_gen():
     data = Anilist.trending()
     random.shuffle(data)
     html = ''
