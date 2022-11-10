@@ -9,13 +9,14 @@ def get_genre_html(li):
     html = ''
 
     for i in li:
-        html += x.format(i)
+        html += x.format(i.strip())
 
     return html
 
 
-def get_eps_html(anime,title):
-    data = GoGoApi().get_episodes(GoGoApi().search(anime, True)[0])
+def get_eps_html(anime,title,data=None):
+    if not data:
+        data = GoGoApi().get_episodes(GoGoApi().search(anime, True)[0])
     x = """<a class="ep-btn" href="{}">{}</a>"""
     html = ''
     for i in range(1,data+1):

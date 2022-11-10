@@ -39,6 +39,28 @@ class GoGoApi:
                     Anime(url,img,released,title,None)
                 )
             return results
+    def anime(self,anime):
+        soup = bs(requests.get(
+            f'https://{self.host}/category/'+anime).content, 'html.parser')
+        title = soup.find('h1').text
+        types = soup.find_all('p','type')
+        synopsis = types[1].text.replace('Plot Summary: ','').strip()
+        names = types[5].text.replace('Other name: ','').strip()
+        studios = '?'
+        ep = soup.find('a', 'active').get('ep_end')
+        episodes = int(ep.strip())
+        genres = types[2].text.replace('Genre: ','').strip().split(',')
+        img = soup.find('div','anime_info_body_bg').find('img').get('src')
+        if 'dub' in anime.lower():
+            dub = 'DUB'
+        else:
+            dub='SUB'
+        year = types[3].text.replace('Released: ','').strip()
+        typo = types[0].text.replace('Type: ','').strip()
+        season = typo
+        status = types[4].text.replace('Status: ','').strip()
+
+        return (title,synopsis,names,studios,episodes,genres,img,dub,season,year,typo,status)
 
     def home(self):
         soup = bs(requests.get(
@@ -123,3 +145,6 @@ class GoGoApi:
 
             data['DUB'] = embeds
             return data
+
+
+print(GoGoApi().anime)

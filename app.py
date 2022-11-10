@@ -6,13 +6,21 @@ from programs.gogo import GoGoApi
 GOGO = GoGoApi()
 app = Flask(__name__)
 
+SLIDERS = None
 
 @app.route('/')
 def hello_world():
     html = render_template('home.html')
     div1 = get_trending_html()
     div2 = get_recent_html(GOGO.home())
-    sliders, slider = slider_gen()
+
+    if SLIDERS:
+        sliders, sdata = slider_gen(SLIDERS)
+        print('Loaded Cache')
+    else:
+        sliders, sdata = slider_gen()
+        SLIDERS = sdata
+        print('Saved Cache')
 
     html = html.replace(
         'MOST_POPULAR',
@@ -76,12 +84,12 @@ def get_episode(anime, episode):
 
 @app.route('/anime/<anime>')
 def get_anime(anime):
+    x = anime
     anime = anime.lower().replace('sub','').replace('dub','')
-    if '.' in anime:
-        anime = anime.split('.')[0].replace('-', ' ')
     
     try:
         data = Anilist.anime(get_t_from_u(anime))
+        img = data.get('image')
         title = get_atitle(data.get('title'))
         synopsis = data.get('description')
         names = get_other_title(data.get('title'))
@@ -90,23 +98,42 @@ def get_anime(anime):
         genres = get_genre_html(data.get('genres'))
         displayAnime = animeRecHtml(data.get('recommendations'))
         ep_html = get_eps_html(anime, title)
+        dub = data.get('type')
+        season = data.get('season')
+        year = data.get('releaseDate')
+        typo = data.get('type')
+        status = data.get('status')
     except:
-        data = GOGO.anime(get_t_from_u(anime))
+        data = GOGO.anime(x)
+        title = data[0]
+        synopsis = data[1]
+        names = data[2]
+        studios = data[3]
+        episodes = data[4]
+        genres = get_genre_html(data[5])
+        img = data[6]
+        dub = data[7]
+        season = data[8]
+        year = data[9]
+        typo = data[10]
+        status = data[11]
+        displayAnime = 'Not Available'
+        ep_html = get_eps_html(anime, title,episodes)
 
 
     html = render_template('anime.html',
-                           img=data.get('image'),
+                           img=img,
                            title=title,
-                           DUB=data.get('type'),
-                           SEASON=data.get('season'),
+                           DUB=dub,
+                           SEASON=season,
                            other=names,
                            studios=studios,
                            episodes=episodes,
-                           year=data.get('releaseDate'),
-                           ATYPE=data.get('type'),
-                           status=data.get('status'),
-                           animeURL=f'/anime/{anime}',
-                           WATCHNOW=f'/episode/{anime}/1',
+                           year=year,
+                           ATYPE=typo,
+                           status=status,
+                           animeURL=f'/anime/{x}',
+                           WATCHNOW=f'/episode/{x}/1',
                            aid=anime
                            )
 
