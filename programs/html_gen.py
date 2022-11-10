@@ -234,7 +234,7 @@ def slider_gen():
         )
         html += temp
         pos += 1
-    return html,data
+    return html
 
 
 def episodeHtml(episode, title):

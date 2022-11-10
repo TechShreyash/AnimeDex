@@ -6,21 +6,13 @@ from programs.gogo import GoGoApi
 GOGO = GoGoApi()
 app = Flask(__name__)
 
-SLIDERS = None
 
 @app.route('/')
-def hello_world():
+def home():
     html = render_template('home.html')
     div1 = get_trending_html()
     div2 = get_recent_html(GOGO.home())
-
-    if SLIDERS:
-        sliders, sdata = slider_gen(SLIDERS)
-        print('Loaded Cache')
-    else:
-        sliders, sdata = slider_gen()
-        SLIDERS = sdata
-        print('Saved Cache')
+    sliders = slider_gen()
 
     html = html.replace(
         'MOST_POPULAR',
@@ -62,14 +54,15 @@ def get_embed():
 
 @app.route('/episode/<anime>/<episode>')
 def get_episode(anime, episode):
-    anime = anime.lower().replace('sub','').replace('dub','')
+    anime = anime.lower().replace('sub', '').replace('dub', '')
     anime = get_t_from_u(anime)
     search = GOGO.search(anime, True)
 
     total_eps = GoGoApi().get_episodes(search[0])
 
     eps = GOGO.get_links(search[0], episode)
-    btn_html = get_selector_btns(f"/episode/{anime}/", int(episode), int(total_eps))
+    btn_html = get_selector_btns(
+        f"/episode/{anime}/", int(episode), int(total_eps))
     ep_html, iframe = episodeHtml(eps, f'{anime} - Episode {episode}')
 
     temp = render_template(
@@ -85,8 +78,8 @@ def get_episode(anime, episode):
 @app.route('/anime/<anime>')
 def get_anime(anime):
     x = anime
-    anime = anime.lower().replace('sub','').replace('dub','')
-    
+    anime = anime.lower().replace('sub', '').replace('dub', '')
+
     try:
         data = Anilist.anime(get_t_from_u(anime))
         img = data.get('image')
@@ -118,8 +111,7 @@ def get_anime(anime):
         typo = data[10]
         status = data[11]
         displayAnime = 'Not Available'
-        ep_html = get_eps_html(anime, title,episodes)
-
+        ep_html = get_eps_html(anime, title, episodes)
 
     html = render_template('anime.html',
                            img=img,
@@ -146,7 +138,8 @@ def get_anime(anime):
 
 @app.route('/search', methods=['GET'])
 def search_anime():
-    anime = request.args.get('query').lower().replace('sub','').replace('dub','')
+    anime = request.args.get('query').lower().replace(
+        'sub', '').replace('dub', '')
 
     html = render_template('search.html',
                            aid=anime.replace('+', ' '))
@@ -162,4 +155,4 @@ def search_anime():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0',debug=True)
+    app.run('0.0.0.0')

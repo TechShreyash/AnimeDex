@@ -33,34 +33,35 @@ class GoGoApi:
             for i in animes:
                 url = i.find('a').get('href').replace('/category/', '')
                 img = i.find('img').get('src')
-                title = i.find('p','name').text
-                released = i.find('p','released').text
+                title = i.find('p', 'name').text
+                released = i.find('p', 'released').text
                 results.append(
-                    Anime(url,img,released,title,None)
+                    Anime(url, img, released, title, None)
                 )
             return results
-    def anime(self,anime):
+
+    def anime(self, anime):
         soup = bs(requests.get(
             f'https://{self.host}/category/'+anime).content, 'html.parser')
         title = soup.find('h1').text
-        types = soup.find_all('p','type')
-        synopsis = types[1].text.replace('Plot Summary: ','').strip()
-        names = types[5].text.replace('Other name: ','').strip()
+        types = soup.find_all('p', 'type')
+        synopsis = types[1].text.replace('Plot Summary: ', '').strip()
+        names = types[5].text.replace('Other name: ', '').strip()
         studios = '?'
         ep = soup.find('a', 'active').get('ep_end')
         episodes = int(ep.strip())
-        genres = types[2].text.replace('Genre: ','').strip().split(',')
-        img = soup.find('div','anime_info_body_bg').find('img').get('src')
+        genres = types[2].text.replace('Genre: ', '').strip().split(',')
+        img = soup.find('div', 'anime_info_body_bg').find('img').get('src')
         if 'dub' in anime.lower():
             dub = 'DUB'
         else:
-            dub='SUB'
-        year = types[3].text.replace('Released: ','').strip()
-        typo = types[0].text.replace('Type: ','').strip()
+            dub = 'SUB'
+        year = types[3].text.replace('Released: ', '').strip()
+        typo = types[0].text.replace('Type: ', '').strip()
         season = typo
-        status = types[4].text.replace('Status: ','').strip()
+        status = types[4].text.replace('Status: ', '').strip()
 
-        return (title,synopsis,names,studios,episodes,genres,img,dub,season,year,typo,status)
+        return (title, synopsis, names, studios, episodes, genres, img, dub, season, year, typo, status)
 
     def home(self):
         soup = bs(requests.get(
@@ -145,6 +146,3 @@ class GoGoApi:
 
             data['DUB'] = embeds
             return data
-
-
-print(GoGoApi().anime)
