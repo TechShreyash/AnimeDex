@@ -6,21 +6,13 @@ from programs.gogo import GoGoApi
 GOGO = GoGoApi()
 app = Flask(__name__)
 
-SLIDERS = None
 
 @app.route('/')
 def hello_world():
     html = render_template('home.html')
     div1 = get_trending_html()
     div2 = get_recent_html(GOGO.home())
-
-    if SLIDERS:
-        sliders, sdata = slider_gen(SLIDERS)
-        print('Loaded Cache')
-    else:
-        sliders, sdata = slider_gen()
-        SLIDERS = sdata
-        print('Saved Cache')
+    sliders = slider_gen()
 
     html = html.replace(
         'MOST_POPULAR',
