@@ -14,15 +14,14 @@ def get_genre_html(li):
     return html
 
 
-def get_eps_html(anime,title,data=None):
+def get_eps_html(anime, title, data=None):
     if not data:
         data = GoGoApi().get_episodes(GoGoApi().search(anime, True)[0])
     x = """<a class="ep-btn" href="{}">{}</a>"""
     html = ''
-    for i in range(1,data+1):
+    for i in range(1, data+1):
         html += x.format(f'/episode/{title}/{str(i)}', str(i))
     return html
-
 
 
 ANIME_POS = """
@@ -104,7 +103,8 @@ def get_trending_html():
 
     return html
 
-def get_search_html(data:Anime):
+
+def get_search_html(data: Anime):
     html = ''
 
     for i in data:
@@ -129,7 +129,7 @@ def get_recent_html(data):
 
     for i in data:
         i: Anime
-               
+
         x = ANIME_POS.format(
             i.url,
             i.lang,
@@ -238,11 +238,11 @@ def slider_gen():
 
 
 def episodeHtml(episode, title):
-    isSub =episode.get('SUB')
-    isDub =episode.get('DUB')
-    sub  = dub = ''
-    defa =0
-    s,d=1,1
+    isSub = episode.get('SUB')
+    isDub = episode.get('DUB')
+    sub = dub = ''
+    defa = 0
+    s, d = 1, 1
 
     if isSub:
         for i in isSub:
@@ -256,7 +256,7 @@ def episodeHtml(episode, title):
                         <a class="sobtn" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server {s}</a>
                     </div>"""
             s += 1
-    
+
     if isDub:
         for i in isDub:
             if defa == 0:
@@ -268,7 +268,7 @@ def episodeHtml(episode, title):
                 dub += f"""<div class="sitem">
                         <a class="sobtn" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server {d}</a>
                     </div>"""
-            d += 1            
+            d += 1
 
     if sub != '':
         t4 = f"""<div class="server">

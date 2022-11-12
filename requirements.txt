@@ -1,8 +1,5 @@
-gunicorn
 requests
 bs4
 flask
-cssselect
-regex
 yarl
 pycryptodomex

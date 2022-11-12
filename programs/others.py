@@ -100,6 +100,7 @@ def get_other_title(title):
         other += tit + ', '
     return tit[:-2]
 
+
 def get_studios(stud):
     tit = ''
     for i in stud:
@@ -116,6 +117,6 @@ def get_genre(genres):
 def get_urls(title):
     return '/anime/' + str(requests.utils.quote(title))
 
+
 def get_t_from_u(url):
-    return str(requests.utils.unquote(url)).replace('/anime/','')
-    
+    return str(requests.utils.unquote(url)).replace('/anime/', '')

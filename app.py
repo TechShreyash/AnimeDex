@@ -6,6 +6,7 @@ from programs.gogo import GoGoApi
 GOGO = GoGoApi()
 app = Flask(__name__)
 
+
 @app.errorhandler(404)
 def error():
     return 'Something went wrong...\n\n Probably Anilist Is Down. Report To https://t.me/techshreyash'
@@ -43,13 +44,13 @@ def home():
 @app.route('/embed')
 def get_embed():
     url = request.args.get('url')
-    if url and '.m3u8' not in url:
-        return redirect(url)
     if url:
         if '.m3u8' in url or '.mp4' in url or '.mkv' in url:
             file = url
         else:
             file = request.args.get('file')
+    if not file:
+        return redirect(url)
     sub = request.args.get('sub')
     title = request.args.get('title')
     if sub != None:
