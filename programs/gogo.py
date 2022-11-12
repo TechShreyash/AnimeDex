@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
+from programs.others import get_t_from_u
 from programs.vidstream import extract
 
 
@@ -15,6 +16,8 @@ class Anime:
 class GoGoApi:
     def __init__(self) -> None:
         self.host = 'gogoanime.dk'
+        self.api = ['https://api-techshreyash.up.railway.app/',
+                    'https://api.consumet.org/']
 
     def search(self, query, url_only=False):
         soup = bs(requests.get(
@@ -39,6 +42,20 @@ class GoGoApi:
                     Anime(url, img, released, title, None)
                 )
             return results
+
+    def anime_api(self, anime):
+        anime = get_t_from_u(anime).strip().replace(' ', '-')
+        for host in self.api:
+            try:
+                url = host + 'anime/gogoanime/info/' + anime
+                data = requests.get(url)
+                if data.status_code == 200:
+                    data = data.json()
+                    if data:
+                        break
+            except:
+                continue
+        return data
 
     def anime(self, anime):
         soup = bs(requests.get(

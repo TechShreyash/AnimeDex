@@ -7,9 +7,9 @@ GOGO = GoGoApi()
 app = Flask(__name__)
 
 
-@app.errorhandler(404)
-def error():
-    return 'Something went wrong...\n\n Probably Anilist Is Down. Report To https://t.me/techshreyash'
+@app.errorhandler(Exception)
+def error(error=None):
+    return '<h1>Something went wrong...\n\n Report To <a href="https://t.me/techshreyash">Owner</a></h1>'
 
 
 @app.route('/')
@@ -111,21 +111,38 @@ def get_anime(anime):
         typo = data.get('type')
         status = data.get('status')
     except:
-        data = GOGO.anime(x)
-        title = data[0]
-        synopsis = data[1]
-        names = data[2]
-        studios = data[3]
-        episodes = data[4]
-        genres = get_genre_html(data[5])
-        img = data[6]
-        dub = data[7]
-        season = data[8]
-        year = data[9]
-        typo = data[10]
-        status = data[11]
-        displayAnime = 'Not Available'
-        ep_html = get_eps_html(anime, title, episodes)
+        try:
+            data = GOGO.anime(x)
+            title = data[0]
+            synopsis = data[1]
+            names = data[2]
+            studios = data[3]
+            episodes = data[4]
+            genres = get_genre_html(data[5])
+            img = data[6]
+            dub = data[7]
+            season = data[8]
+            year = data[9]
+            typo = data[10]
+            status = data[11]
+            displayAnime = 'Not Available'
+            ep_html = get_eps_html(anime, title, episodes)
+        except:
+            data = GOGO.anime_api(x)
+            img = data.get('image')
+            title = data.get('title')
+            synopsis = data.get('description')
+            names = data.get('otherName')
+            studios = '?'
+            episodes = str(len(data.get('episodes')))
+            genres = get_genre_html(data.get('genres'))
+            displayAnime = 'Not Available'
+            ep_html = get_eps_html(anime, title)
+            dub = data.get('subOrDub').upper()
+            season = data.get('type')
+            year = data.get('type')
+            typo = data.get('type')
+            status = data.get('status')
 
     html = render_template('anime.html',
                            img=img,
