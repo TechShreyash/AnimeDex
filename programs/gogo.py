@@ -45,21 +45,42 @@ class GoGoApi:
             f'https://{self.host}/category/'+anime).content, 'html.parser')
         title = soup.find('h1').text
         types = soup.find_all('p', 'type')
-        synopsis = types[1].text.replace('Plot Summary: ', '').strip()
-        names = types[5].text.replace('Other name: ', '').strip()
+        try:
+            synopsis = types[1].text.replace('Plot Summary: ', '').strip()
+        except:
+            synopsis = '?'
+        try:
+            names = types[5].text.replace('Other name: ', '').strip()
+        except:
+            names = '?'
         studios = '?'
-        ep = soup.find('a', 'active').get('ep_end')
+        try:
+            ep = soup.find('a', 'active').get('ep_end')
+        except:
+            ep = '?'
         episodes = int(ep.strip())
-        genres = types[2].text.replace('Genre: ', '').strip().split(',')
+        try:
+            genres = types[2].text.replace('Genre: ', '').strip().split(',')
+        except:
+            genres = '?'
         img = soup.find('div', 'anime_info_body_bg').find('img').get('src')
         if 'dub' in anime.lower():
             dub = 'DUB'
         else:
             dub = 'SUB'
-        year = types[3].text.replace('Released: ', '').strip()
-        typo = types[0].text.replace('Type: ', '').strip()
+        try:
+            year = types[3].text.replace('Released: ', '').strip()
+        except:
+            year = '?'
+        try:
+            typo = types[0].text.replace('Type: ', '').strip()
+        except:
+            typo = '?'
         season = typo
-        status = types[4].text.replace('Status: ', '').strip()
+        try:
+            status = types[4].text.replace('Status: ', '').strip()
+        except:
+            status = '?'
 
         return (title, synopsis, names, studios, episodes, genres, img, dub, season, year, typo, status)
 
