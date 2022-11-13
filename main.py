@@ -70,7 +70,12 @@ def get_embed():
 
 @app.route('/episode/<anime>/<episode>')
 def get_episode(anime, episode):
-    anime = anime.lower().replace('sub', '').replace('dub', '')
+    anime = anime.lower()
+    if anime.endswith('dub'):
+        anime = anime[:-4]
+    if anime.endswith('sub'):
+        anime = anime[:-4]
+
     anime = get_t_from_u(anime)
     search = GOGO.search(anime, True)
 
@@ -95,7 +100,11 @@ def get_episode(anime, episode):
 @app.route('/anime/<anime>')
 def get_anime(anime):
     x = anime
-    anime = anime.lower().replace('sub', '').replace('dub', '')
+    anime = anime.lower()
+    if anime.endswith('dub'):
+        anime = anime[:-4]
+    if anime.endswith('sub'):
+        anime = anime[:-4]
 
     try:
         data = Anilist.anime(get_t_from_u(anime))
@@ -172,8 +181,12 @@ def get_anime(anime):
 
 @app.route('/search', methods=['GET'])
 def search_anime():
-    anime = request.args.get('query').lower().replace(
-        'sub', '').replace('dub', '')
+    anime = request.args.get('query').lower().strip()
+
+    if anime.endswith('dub'):
+        anime = anime[:-4]
+    if anime.endswith('sub'):
+        anime = anime[:-4]
 
     html = render_template('search.html',
                            aid=anime.replace('+', ' '))

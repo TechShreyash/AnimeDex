@@ -15,8 +15,11 @@ def get_names(li):
 
 
 def get_title(tit):
-    x = tit.replace('dub', '').replace(
-        'sub', '').replace('-', ' ').title().strip()
+    if tit.endswith('dub'):
+        tit = tit[:-4]
+    if tit.endswith('sub'):
+        tit = tit[:-4]
+    x = tit.replace('-', ' ').title().strip()
 
     if x[-1] not in digits:
         x += ' 1'
