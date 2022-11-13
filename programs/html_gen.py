@@ -1,4 +1,5 @@
 import random
+from programs.db import update_views
 from programs.gogo import Anime, GoGoApi
 from programs.others import get_atitle, get_genre, get_urls
 from programs.anilist import Anilist
@@ -16,7 +17,9 @@ def get_genre_html(li):
 
 def get_eps_html(anime, title, data=None):
     if not data:
-        data = GoGoApi().get_episodes(GoGoApi().search(anime, True)[0])
+        aid = GoGoApi().search(anime, True)[0].strip()
+        update_views(aid)
+        data = GoGoApi().get_episodes(aid)
     x = """<a class="ep-btn" href="{}">{}</a>"""
     html = ''
     for i in range(1, data+1):

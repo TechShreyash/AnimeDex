@@ -1,3 +1,4 @@
+from programs.db import update_views
 from programs.html_gen import animeRecHtml, episodeHtml, get_eps_html, get_recent_html, get_search_html, get_selector_btns, get_genre_html, get_trending_html, slider_gen
 from flask import Flask, render_template, request, redirect
 from programs.anilist import Anilist
@@ -14,6 +15,7 @@ def error(error=None):
 
 @app.route('/')
 def home():
+    update_views('home-animedex')
     html = render_template('home.html')
     try:
         div1 = get_trending_html()
@@ -73,6 +75,7 @@ def get_episode(anime, episode):
     search = GOGO.search(anime, True)
 
     total_eps = GoGoApi().get_episodes(search[0])
+    update_views(search[0].strip())
 
     eps = GOGO.get_links(search[0], episode)
     btn_html = get_selector_btns(

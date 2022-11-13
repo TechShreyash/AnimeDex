@@ -15,7 +15,7 @@ class Anime:
 
 class GoGoApi:
     def __init__(self) -> None:
-        self.host = 'gogoanime.dk'
+        self.host = 'gogoanime.ar'
         self.api = ['https://api-techshreyash.up.railway.app/',
                     'https://api.consumet.org/']
 
