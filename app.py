@@ -8,11 +8,6 @@ GOGO = GoGoApi()
 app = Flask(__name__)
 
 
-@app.errorhandler(Exception)
-def error(error=None):
-    return '<h1>Something went wrong...\n\n Report To <a href="https://t.me/techshreyash">Owner</a></h1>'
-
-
 @app.route('/')
 def home():
     update_views('home-animedex')
