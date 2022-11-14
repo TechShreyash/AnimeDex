@@ -31,6 +31,19 @@
 
 <hr>
 
+### 📊 Stats Of One Day
+
+🔥 Total 3578 Views
+
+⚡️ Total 1589 Views Of Anime Page  & 1989 Views Of Episode Page
+
+- 68 Home Page Views
+- Top Anime Page "[fuufu-ijou-koibito-miman](https://anime-dex1.vercel.app/anime/fuufu-ijou-koibito-miman)" Have 30 Views & Top Episode Page "[ojamajo-doremi](https://anime-dex1.vercel.app/anime/ojamajo-doremi)" Have 13 Views
+- Total 1116 Different Anime Pages Have Over 1587 Views
+- Total 716 Different Episode Pages Have Over 1980 Views
+
+<hr>
+
 ### 📸 Screenshots
 
 <img src="./static/img/home.png">
