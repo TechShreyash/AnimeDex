@@ -16,15 +16,18 @@ def get_genre_html(li):
 
 
 def get_eps_html(anime, title, data=None):
-    if not data:
-        aid = GoGoApi().search(anime, True)[0].strip()
-        update_views(aid)
-        data = GoGoApi().get_episodes(aid)
-    x = """<a class="ep-btn" href="{}">{}</a>"""
-    html = ''
-    for i in range(1, data+1):
-        html += x.format(f'/episode/{title}/{str(i)}', str(i))
-    return html
+    try:
+        if not data:
+            aid = GoGoApi().search(anime, True)[0].strip()
+            update_views(aid)
+            data = GoGoApi().get_episodes(aid)
+        x = """<a class="ep-btn" href="{}">{}</a>"""
+        html = ''
+        for i in range(1, data+1):
+            html += x.format(f'/episode/{aid}/{str(i)}', str(i))
+        return html
+    except:
+        return 'None'
 
 
 ANIME_POS = """
