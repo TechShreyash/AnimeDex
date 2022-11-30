@@ -30,6 +30,7 @@ class GoGoApi:
             for i in animes:
                 url = i.find('a').get('href').replace('/category/', '')
                 results.append(url)
+            print(results)
             return results
         else:
             results = []
@@ -122,17 +123,25 @@ class GoGoApi:
         return results
 
     def get_episodes(self, anime):
-        soup = bs(requests.get(
-            f'https://{self.host}/category/{anime}').content, 'html.parser')
+        anime_id = bs(requests.get(
+            f'https://{self.host}/category/{anime}').content, 'html.parser').find('input', 'movie_id').get('value')
 
-        ep = soup.find('a', 'active').get('ep_end')
-        return int(ep.strip())
+        html = bs(requests.get(
+            f'https://ajax.gogo-load.com/ajax/load-list-episode?ep_start=0&ep_end=100000&id={anime_id}').content, 'html.parser')
 
-    def get_links(self, anime, episode):
+        li = html.find_all('li')
+        eps = []
+        for i in li:
+            a = i.find('a').get('href').strip()[1:]
+            eps.append(a)
+        eps.reverse()
+        return len(li), eps
+
+    def get_links(self, anime, episode, eps):
         data = {}
-
+        x = eps[int(episode)-1].get('id')
         soup = bs(requests.get(
-            f'https://{self.host}/{anime}-episode-{episode}').content, 'html.parser')
+            f'https://{self.host}/{x}').content, 'html.parser')
         div = soup.find('div', 'anime_muti_link')
         a = div.find_all('a')
         embeds = []
@@ -150,37 +159,29 @@ class GoGoApi:
 
             if 'mp4upload' not in url:
                 embeds.append(url)
-
         if 'dub' in anime:
             data['DUB'] = embeds
         else:
             data['SUB'] = embeds
             anime += '-dub'
-
             soup = bs(requests.get(
-                f'https://{self.host}/{anime}-episode-{episode}').content, 'html.parser')
-
+                f'https://{self.host}/{x}').content, 'html.parser')
             error = soup.find('h1', 'entry-title')
             if error:
                 return data
-
             div = soup.find('div', 'anime_muti_link')
             a = div.find_all('a')
             embeds = []
-
             for i in a:
                 url = i.get('data-video')
                 if not url.startswith('https'):
                     url = 'https:'+url
-
                 if 'gogohd' in url:
                     url = extract(url)
-
                 if 'mixdrop.co' in url:
                     url = url.replace('mixdrop.co', 'mixdrop.ch')
-
                 if 'mp4upload' not in url:
                     embeds.append(url)
-
             data['DUB'] = embeds
             return data
+        return data

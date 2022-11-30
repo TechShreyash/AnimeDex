@@ -1,67 +1,181 @@
+from datetime import datetime
 import requests
 
-hosts = ['https://api-techshreyash.up.railway.app/',
-         'https://api.consumet.org/']
+
+def get_season(future: bool = False):
+    k = datetime.now()
+    m = k.month
+    if future:
+        m = m+3
+    y = k.year
+    if m > 12:
+        y = y+1
+    if m in [1, 2, 3] or m > 12:
+        return 'WINTER', y
+    if m in [4, 5, 6]:
+        return 'SPRING', y
+    if m in [7, 8, 9]:
+        return 'SUMMER', y
+    if m in [10, 11, 12]:
+        return 'FALL', y
 
 
 class Anilist:
-    def trending():
-        for host in hosts:
-            try:
-                data = requests.get(host + 'meta/anilist/trending')
-            except:
-                continue
-            if data.status_code == 200:
-                data = data.json()
-                results = data.get('results')
-                if results:
-                    break
-        return results
+    def __init__(self) -> None:
 
-    def popular():
-        for host in hosts:
-            try:
-                data = requests.get(host + 'meta/anilist/popular')
-            except:
-                continue
-            if data.status_code == 200:
-                data = data.json()
-                results = data.get('results')
-                if results:
-                    break
-        return results
+        self.BROWSE_QUERY = """
+query ($s: MediaSeason, $y: Int, $sort: [MediaSort]) {
+    Page {
+        media (season: $s, seasonYear: $y, sort: $sort) {
+    	    title {
+                romaji
+                english
+                native
+            }
+            format
+            genres
+            episodes
+            bannerImage
+            coverImage{
+                medium
+            }
+            type
+            status
+            description
+        }
+    }
+}
+"""
+        self.ANIME_QUERY = """
+query ($id: Int, $idMal: Int, $search: String) {
+  Media(id: $id, idMal: $idMal, search: $search, type: ANIME) {
+    id
+    idMal
+    title {
+      romaji
+      english
+      native
+    }
+    format
+    status
+    episodes
+    seasonYear
+    season
+    description
+    studios(sort: FAVOURITES_DESC, isMain: true) {
+      nodes {
+        name
+      }
+    }
+    bannerImage
+    coverImage {
+      medium
+    }
+    genres
+    averageScore
+    recommendations {
+      edges {
+        node {
+          id
+          mediaRecommendation {
+            id
+            title {
+              romaji
+              english
+              native
+            }
+            status
+            episodes
+            coverImage {
+              medium
+            }
+            bannerImage
+            format
+            meanScore
+          }
+        }
+      }
+    }
+  }
+}
+"""
+        self.RECOMMENDATIONS = """
+        query ($id: Int, $idMal: Int, $search: String) {
+  Media(id: $id, idMal: $idMal, search: $search, type: ANIME) {
+    recommendations {
+      edges {
+        node {
+          id
+          mediaRecommendation {
+            id
+            title {
+              romaji
+              english
+              native
+            }
+            status
+            episodes
+            coverImage {
+              medium
+            }
+            bannerImage
+            format
+            meanScore
+          }
+        }
+      }
+    }
+  }
+}
 
-    def anime(anime):
-        for host in hosts:
-            data = requests.get(host + 'meta/anilist/' + anime)
-            if data.status_code == 200:
-                data = data.json()
-                results = data.get('results')
-                if results:
-                    break
-        if not results:
-            return
+        """
 
-        id = results[0]['id']
+    def trending(self):
+        s, y = get_season()
+        vars = {"s": s, "y": y, "sort": 'TRENDING_DESC'}
+        data = requests.post(
+            'https://graphql.anilist.co',
+            json={
+                'query': self.BROWSE_QUERY,
+                'variables': vars
+            }
+        ).json()
+        return data.get('data').get('Page').get('media')
 
-        for host in hosts:
-            try:
-                data = requests.get(host + 'meta/anilist/info/' + str(id))
-            except:
-                continue
-            if data.status_code == 200:
-                data = data.json()
-                id = data.get('id')
-                if id:
-                    break
-        return data
+    def popular(self):
+        s, y = get_season()
+        vars = {"s": s, "y": y, "sort": 'POPULARITY_DESC'}
+        data = requests.post(
+            'https://graphql.anilist.co',
+            json={
+                'query': self.BROWSE_QUERY,
+                'variables': vars
+            }
+        ).json()
+        return data.get('data').get('Page').get('media')
 
-    def search(query):
-        for host in hosts:
-            data = requests.get(host + 'meta/anilist/' + query)
-            if data.status_code == 200:
-                data = data.json()
-                results = data.get('results')
-                if results:
-                    break
-        return results
+    def anime(self, anime):
+        s, y = get_season()
+        vars = {'search': anime}
+        data = requests.post(
+            'https://graphql.anilist.co',
+            json={
+                'query': self.ANIME_QUERY,
+                'variables': vars
+            }
+        ).json()
+        return data.get('data').get('Media')
+
+    def get_recommendation(self, anime):
+        s, y = get_season()
+        vars = {'search': anime}
+        data = requests.post(
+            'https://graphql.anilist.co',
+            json={
+                'query': self.ANIME_QUERY,
+                'variables': vars
+            }
+        ).json()
+        return data.get('data').get('Media')
+
+# print(Anilist().anime('horimiya').get('recommendations'))

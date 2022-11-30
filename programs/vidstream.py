@@ -5,20 +5,9 @@ import json
 import yarl
 import requests
 
-
-base_url = "https://animixplay.to"
 s = b'37911490979715163134003223491201'
 s_2 = b'54674138327930866480207815084989'
 iv = b'3134003223491201'
-
-
-def extract_episode_info(anime_id):
-    r = requests.get(
-        f"{base_url}{anime_id}"
-    )
-    soup = bs(r.text, "html.parser")
-    data = json.loads(soup.select("#epslistplace")[0].text)
-    return data
 
 
 def get_crypto(url):

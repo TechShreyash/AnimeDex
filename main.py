@@ -10,20 +10,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    update_views('home-animedex')
     html = render_template('home.html')
-    try:
-        div1 = get_trending_html()
-    except:
-        div1 = ''
+    div1 = get_trending_html()
     try:
         div2 = get_recent_html(GOGO.home())
     except:
         div2 = ''
-    try:
-        sliders = slider_gen()
-    except:
-        sliders = ''
+    sliders = slider_gen()
 
     html = html.replace(
         'MOST_POPULAR',
@@ -35,6 +28,7 @@ def home():
         'SLIDERS',
         sliders
     )
+    update_views('home-animedex')
     return html
 
 
@@ -65,19 +59,20 @@ def get_embed():
 
 @app.route('/episode/<anime>/<episode>')
 def get_episode(anime, episode):
+    anime = get_t_from_u(anime)
     anime = anime.lower()
+    print(anime)
+
     if anime.endswith('dub'):
         anime = anime[:-4]
     if anime.endswith('sub'):
         anime = anime[:-4]
-
-    anime = get_t_from_u(anime)
     search = GOGO.search(anime, True)
+    s = GOGO.anime_api(search[0])['episodes']
+    total_eps = len(s)
+    eps = GOGO.get_links(search[0], episode, s)
+    aid = search[0]
 
-    total_eps = GoGoApi().get_episodes(search[0])
-    update_watch(search[0].strip())
-
-    eps = GOGO.get_links(search[0], episode)
     btn_html = get_selector_btns(
         f"/episode/{anime}/", int(episode), int(total_eps))
     ep_html, iframe = episodeHtml(eps, f'{anime} - Episode {episode}')
@@ -89,67 +84,63 @@ def get_episode(anime, episode):
         iframe=iframe
     )
 
+    update_watch(aid)
     return temp.replace('PROSLO', btn_html).replace('SERVER', ep_html)
 
 
 @app.route('/anime/<anime>')
 def get_anime(anime):
-    x = anime
-    anime = anime.lower()
-    if anime.endswith('dub'):
-        anime = anime[:-4]
-    if anime.endswith('sub'):
-        anime = anime[:-4]
-
     try:
-        data = Anilist.anime(get_t_from_u(anime))
-        img = data.get('image')
+        data = GOGO.anime(anime)
+        title = data[0]
+        synopsis = data[1]
+        names = data[2]
+        studios = data[3]
+        episodes = data[4]
+        genres = get_genre_html(data[5])
+        img = data[6]
+        dub = data[7]
+        season = data[8]
+        year = data[9]
+        typo = data[10]
+        status = data[11]
+        try:
+            x = anime.lower()
+            if x.endswith('dub'):
+                x = x[:-4]
+            if x.endswith('sub'):
+                x = x[:-4]
+            x = get_t_from_u(x).replace('-', ' ')
+            displayAnime = animeRecHtml(Anilist().get_recommendation(x))
+        except Exception as e:
+            print(e, displayAnime)
+            displayAnime = 'Not Available'
+        ep_html, watch = get_eps_html(anime, anime)
+    except:
+        anime = anime.lower()
+        if anime.endswith('dub'):
+            anime = anime[:-4]
+        if anime.endswith('sub'):
+            anime = anime[:-4]
+        anime = get_t_from_u(anime).replace('-', ' ')
+        data = Anilist().anime(anime)
+
+        img = data.get('coverImage').get('medium').replace('small', 'medium')
+        if not img:
+            img = data.get('bannerImage')
         title = get_atitle(data.get('title'))
         synopsis = data.get('description')
         names = get_other_title(data.get('title'))
-        studios = get_studios(data.get('studios'))
-        episodes = str(data.get('totalEpisodes'))
+        studios = get_studios(data.get('studios').get('nodes'))
+        episodes = str(data.get('episodes'))
         genres = get_genre_html(data.get('genres'))
-        displayAnime = animeRecHtml(data.get('recommendations'))
-        ep_html = get_eps_html(anime, title)
-        dub = data.get('type')
+        displayAnime = animeRecHtml(data.get('recommendations').get('edges'))
+        ep_html, watch = get_eps_html(anime)
+        dub = data.get('format')
         season = data.get('season')
-        year = data.get('releaseDate')
-        typo = data.get('type')
+        year = data.get('seasonYear')
+        typo = data.get('format')
         status = data.get('status')
-    except:
-        try:
-            data = GOGO.anime(x)
-            title = data[0]
-            synopsis = data[1]
-            names = data[2]
-            studios = data[3]
-            episodes = data[4]
-            genres = get_genre_html(data[5])
-            img = data[6]
-            dub = data[7]
-            season = data[8]
-            year = data[9]
-            typo = data[10]
-            status = data[11]
-            displayAnime = 'Not Available'
-            ep_html = get_eps_html(anime, title, episodes)
-        except:
-            data = GOGO.anime_api(x)
-            img = data.get('image')
-            title = data.get('title')
-            synopsis = data.get('description')
-            names = data.get('otherName')
-            studios = '?'
-            episodes = str(len(data.get('episodes')))
-            genres = get_genre_html(data.get('genres'))
-            displayAnime = 'Not Available'
-            ep_html = get_eps_html(anime, title)
-            dub = data.get('subOrDub').upper()
-            season = data.get('type')
-            year = data.get('type')
-            typo = data.get('type')
-            status = data.get('status')
 
     html = render_template('anime.html',
                            img=img,
@@ -162,8 +153,8 @@ def get_anime(anime):
                            year=year,
                            ATYPE=typo,
                            status=status,
-                           animeURL=f'/anime/{x}',
-                           WATCHNOW=f'/episode/{x}/1',
+                           animeURL=f'/anime/{anime}',
+                           WATCHNOW=f'/episode/{watch}',
                            aid=anime
                            )
 
@@ -171,6 +162,7 @@ def get_anime(anime):
     html = html.replace('EPISOS', ep_html)
     html = html.replace('DISPLAY_ANIME', displayAnime)
     html = html.replace('SYNOP', synopsis)
+    update_views(anime)
     return html
 
 
@@ -193,8 +185,9 @@ def search_anime():
         'SEARCHED',
         display
     )
+    update_views('search-animedex')
     return html
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0')
+    app.run('0.0.0.0', debug=True)

@@ -107,7 +107,7 @@ def get_other_title(title):
 def get_studios(stud):
     tit = ''
     for i in stud:
-        tit += i + ', '
+        tit += i.get('name') + ', '
     return tit[:-2]
 
 

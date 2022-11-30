@@ -15,19 +15,19 @@ def get_genre_html(li):
     return html
 
 
-def get_eps_html(anime, title, data=None):
-    try:
-        if not data:
-            aid = GoGoApi().search(anime, True)[0].strip()
-            update_views(aid)
-            data = GoGoApi().get_episodes(aid)
-        x = """<a class="ep-btn" href="{}">{}</a>"""
-        html = ''
-        for i in range(1, data+1):
-            html += x.format(f'/episode/{aid}/{str(i)}', str(i))
-        return html
-    except:
-        return 'None'
+def get_eps_html(anime, aid=None):
+    if not aid:
+        aid = GoGoApi().search(anime, True)[0].strip()
+    total, data = GoGoApi().get_episodes(aid)
+    x = """<a class="ep-btn" href="{}">{}</a>"""
+    html = ''
+    pos = 1
+    for i in data:
+        i = i.replace('-episode-', '/')
+        html += x.format(f'/episode/{i}', str(pos))
+        pos += 1
+    update_views(aid)
+    return html, data[0].replace('-episode-', '/')
 
 
 ANIME_POS = """
@@ -73,34 +73,46 @@ def animeRecHtml(data):
     html = ''
 
     for i in data:
+        i = i.get('node').get('mediaRecommendation')
+        img = i.get('coverImage')
+        if img:
+            img = img.get('medium').replace('small', 'medium')
+        else:
+            img = i.get('bannerImage')
         title = get_atitle(i.get('title'))
         url = get_urls(title)
         x = ANIME_POS.format(
             url,
-            str(i.get('rating')).strip()+' / 100',
+            str(i.get('meanScore')).strip()+' / 100',
             'Ep '+str(i.get('episodes')).strip(),
-            i.get('image').replace('large', 'medium'),
+            img,
             title,
-            i.get('type'),
+            i.get('format'),
             i.get('status')
         )
-        html += x
+        if x not in html:
+            html += x
 
     return html
 
 
 def get_trending_html():
-    data = Anilist.popular()
+    data = Anilist().popular()
     html = ''
 
     for i in data:
+        img = i.get('coverImage')
+        if img:
+            img = img.get('medium').replace('small', 'medium')
+        else:
+            img = i.get('bannerImage')
         title = get_atitle(i.get('title'))
         url = get_urls(title)
         x = ANIME_POS.format(
             url,
             get_genre(i.get('genres')),
-            'Ep '+str(i.get('totalEpisodes')).strip(),
-            i.get('image').replace('large', 'medium'),
+            'Ep '+str(i.get('episodes')).strip(),
+            img,
             title,
             i.get('type'),
             i.get('status')
@@ -217,12 +229,17 @@ SLIDER_HTML = """<div class="mySlides fade">
 
 
 def slider_gen():
-    data = Anilist.trending()
+    data = Anilist().trending()
     random.shuffle(data)
     html = ''
     pos = 1
 
     for i in data:
+        img = i.get('bannerImage')
+        if not img:
+            print(img)
+            img = i.get('coverImage').get('medium').replace(
+                'small', 'large').replace('medium', 'large')
         title = get_atitle(i.get('title'))
         url = get_urls(title)
         temp = SLIDER_HTML.format(
@@ -236,7 +253,7 @@ def slider_gen():
                 '/anime/', '/episode/')+'/1',
             url,
             url,
-            i.get('cover')
+            img
         )
         html += temp
         pos += 1
