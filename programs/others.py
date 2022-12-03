@@ -15,9 +15,9 @@ def get_names(li):
 
 
 def get_title(tit):
-    if tit.endswith('dub'):
+    if tit.endswith('-dub'):
         tit = tit[:-4]
-    if tit.endswith('sub'):
+    if tit.endswith('-sub'):
         tit = tit[:-4]
     x = tit.replace('-', ' ').title().strip()
 

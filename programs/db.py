@@ -9,6 +9,7 @@ def update_views(anime):
         pass
     return
 
+
 def update_watch(anime):
     try:
         requests.get(

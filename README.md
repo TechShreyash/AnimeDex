@@ -19,9 +19,9 @@
 
 - Click Below To Deploy On Vercel
 
-> [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex&project-name=anime-dex&repo-name=anime-dex&demo-title=AnimeDex&demo-description=Watch%20Animes%20Online%20For%20Free&demo-url=https%3A%2F%2Fanime-dex1.vercel.app%2F&demo-image=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex%2Fraw%2Fmain%2Fstatic%2Fhome.png)
+> [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex&project-name=anime-dex&repo-name=anime-dex&demo-title=AnimeDex&demo-description=Watch%20Animes%20Online%20For%20Free&demo-url=https%3A%2F%2Fanimedex.live%2F&demo-image=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex%2Fraw%2Fmain%2Fstatic%2Fhome.png)
 
-> Demo : https://anime-dex1.vercel.app
+> Demo : https://animedex.live
 
 - Deploy To Repl.it
 
@@ -29,18 +29,6 @@
 
 > Demo : https://animedex.shreyashdheemar.repl.co
 
-<hr>
-
-### 📊 Stats Of One Day
-
-🔥 Total 3578 Views
-
-⚡️ Total 1589 Views Of Anime Page  & 1989 Views Of Episode Page
-
-- 68 Home Page Views
-- Top Anime Page "[fuufu-ijou-koibito-miman](https://anime-dex1.vercel.app/anime/fuufu-ijou-koibito-miman)" Have 30 Views & Top Episode Page "[ojamajo-doremi](https://anime-dex1.vercel.app/anime/ojamajo-doremi)" Have 13 Views
-- Total 1116 Different Anime Pages Have Over 1587 Views
-- Total 716 Different Episode Pages Have Over 1980 Views
 
 <hr>
 

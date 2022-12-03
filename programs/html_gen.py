@@ -1,5 +1,4 @@
 import random
-from programs.db import update_views
 from programs.gogo import Anime, GoGoApi
 from programs.others import get_atitle, get_genre, get_urls
 from programs.anilist import Anilist
@@ -26,7 +25,6 @@ def get_eps_html(anime, aid=None):
         i = i.replace('-episode-', '/')
         html += x.format(f'/episode/{i}', str(pos))
         pos += 1
-    update_views(aid)
     return html, data[0].replace('-episode-', '/')
 
 
@@ -237,7 +235,6 @@ def slider_gen():
     for i in data:
         img = i.get('bannerImage')
         if not img:
-            print(img)
             img = i.get('coverImage').get('medium').replace(
                 'small', 'large').replace('medium', 'large')
         title = get_atitle(i.get('title'))

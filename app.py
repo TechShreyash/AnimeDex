@@ -59,19 +59,23 @@ def get_embed():
 
 @app.route('/episode/<anime>/<episode>')
 def get_episode(anime, episode):
-    anime = get_t_from_u(anime)
-    anime = anime.lower()
-    print(anime)
+    anime = get_t_from_u(anime).lower()
+    episode = int(episode)
 
-    if anime.endswith('dub'):
+    if anime.endswith('-dub'):
         anime = anime[:-4]
-    if anime.endswith('sub'):
+    if anime.endswith('-sub'):
         anime = anime[:-4]
-    search = GOGO.search(anime, True)
-    s = GOGO.anime_api(search[0])['episodes']
-    total_eps = len(s)
-    eps = GOGO.get_links(search[0], episode, s)
-    aid = search[0]
+
+    try:
+        total_eps, ep = GOGO.get_episodes(anime)
+        eps = GOGO.get_links(ep[episode-1])
+    except:
+        search = GOGO.search(anime, True)
+        total_eps, ep = GOGO.get_episodes(search[0])
+        eps = GOGO.get_links(ep[episode-1])
+
+    aid = ep[episode-1].split('-episode-')[0]
 
     btn_html = get_selector_btns(
         f"/episode/{anime}/", int(episode), int(total_eps))
@@ -106,21 +110,20 @@ def get_anime(anime):
         status = data[11]
         try:
             x = anime.lower()
-            if x.endswith('dub'):
+            if x.endswith('-dub'):
                 x = x[:-4]
-            if x.endswith('sub'):
+            if x.endswith('-sub'):
                 x = x[:-4]
             x = get_t_from_u(x).replace('-', ' ')
             displayAnime = animeRecHtml(Anilist().get_recommendation(x))
-        except Exception as e:
-            print(e, displayAnime)
+        except:
             displayAnime = 'Not Available'
         ep_html, watch = get_eps_html(anime, anime)
     except:
         anime = anime.lower()
-        if anime.endswith('dub'):
+        if anime.endswith('-dub'):
             anime = anime[:-4]
-        if anime.endswith('sub'):
+        if anime.endswith('-sub'):
             anime = anime[:-4]
         anime = get_t_from_u(anime).replace('-', ' ')
         data = Anilist().anime(anime)
@@ -170,9 +173,9 @@ def get_anime(anime):
 def search_anime():
     anime = request.args.get('query').lower().strip()
 
-    if anime.endswith('dub'):
+    if anime.endswith('-dub'):
         anime = anime[:-4]
-    if anime.endswith('sub'):
+    if anime.endswith('-sub'):
         anime = anime[:-4]
 
     html = render_template('search.html',

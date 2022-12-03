@@ -25,7 +25,7 @@ class Anilist:
 
         self.BROWSE_QUERY = """
 query ($s: MediaSeason, $y: Int, $sort: [MediaSort]) {
-    Page {
+    Page (perPage:10) {
         media (season: $s, seasonYear: $y, sort: $sort) {
     	    title {
                 romaji
@@ -177,5 +177,3 @@ query ($id: Int, $idMal: Int, $search: String) {
             }
         ).json()
         return data.get('data').get('Media')
-
-# print(Anilist().anime('horimiya').get('recommendations'))

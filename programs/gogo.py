@@ -30,7 +30,6 @@ class GoGoApi:
             for i in animes:
                 url = i.find('a').get('href').replace('/category/', '')
                 results.append(url)
-            print(results)
             return results
         else:
             results = []
@@ -61,6 +60,10 @@ class GoGoApi:
     def anime(self, anime):
         soup = bs(requests.get(
             f'https://{self.host}/category/'+anime).content, 'html.parser')
+
+        if soup.find('title').text == "Pages not found":
+            return 'Error'
+
         title = soup.find('h1').text
         types = soup.find_all('p', 'type')
         try:
@@ -137,11 +140,12 @@ class GoGoApi:
         eps.reverse()
         return len(li), eps
 
-    def get_links(self, anime, episode, eps):
+    def get_links(self, url):
+        anime = url
         data = {}
-        x = eps[int(episode)-1].get('id')
+
         soup = bs(requests.get(
-            f'https://{self.host}/{x}').content, 'html.parser')
+            f'https://{self.host}/{url}').content, 'html.parser')
         div = soup.find('div', 'anime_muti_link')
         a = div.find_all('a')
         embeds = []
@@ -163,9 +167,10 @@ class GoGoApi:
             data['DUB'] = embeds
         else:
             data['SUB'] = embeds
-            anime += '-dub'
+            anime = anime.split(
+                '-episode-')[0] + '-dub' + '-episode-' + anime.split('-episode-')[1]
             soup = bs(requests.get(
-                f'https://{self.host}/{x}').content, 'html.parser')
+                f'https://{self.host}/{anime}').content, 'html.parser')
             error = soup.find('h1', 'entry-title')
             if error:
                 return data
