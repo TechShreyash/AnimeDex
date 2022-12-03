@@ -8,7 +8,7 @@ GOGO = GoGoApi()
 app = Flask(__name__)
 
 
-@app.route('/favicon')
+@app.route('/favicon.ico')
 def favicon():
     return 'https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico'
 
