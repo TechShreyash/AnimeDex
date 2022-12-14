@@ -1,6 +1,8 @@
 from datetime import datetime
 import requests
 
+cache = {'recommend': {}}
+
 
 def get_season(future: bool = False):
     k = datetime.now()
@@ -131,6 +133,9 @@ query ($id: Int, $idMal: Int, $search: String) {
         """
 
     def trending(self):
+        if cache.get('trending'):
+            return cache.get('trending')
+
         s, y = get_season()
         vars = {"s": s, "y": y, "sort": 'TRENDING_DESC'}
         data = requests.post(
@@ -140,9 +145,15 @@ query ($id: Int, $idMal: Int, $search: String) {
                 'variables': vars
             }
         ).json()
-        return data.get('data').get('Page').get('media')
+        data = data.get('data').get('Page').get('media')
+        if data:
+            cache['trending'] = data
+        return data
 
     def popular(self):
+        if cache.get('popular'):
+            return cache.get('popular')
+
         s, y = get_season()
         vars = {"s": s, "y": y, "sort": 'POPULARITY_DESC'}
         data = requests.post(
@@ -152,7 +163,10 @@ query ($id: Int, $idMal: Int, $search: String) {
                 'variables': vars
             }
         ).json()
-        return data.get('data').get('Page').get('media')
+        data = data.get('data').get('Page').get('media')
+        if data:
+            cache['popular'] = data
+        return data
 
     def anime(self, anime):
         s, y = get_season()
@@ -167,6 +181,9 @@ query ($id: Int, $idMal: Int, $search: String) {
         return data.get('data').get('Media')
 
     def get_recommendation(self, anime):
+        if cache.get('recommend').get(anime):
+            return cache.get('recommend').get(anime)
+
         s, y = get_season()
         vars = {'search': anime}
         data = requests.post(
@@ -176,4 +193,7 @@ query ($id: Int, $idMal: Int, $search: String) {
                 'variables': vars
             }
         ).json()
-        return data.get('data').get('Media')
+        data = data.get('data').get('Media')
+        if data:
+            cache['recommend'][anime] = data
+        return data

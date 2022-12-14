@@ -116,7 +116,8 @@ def get_anime(anime):
                 x = x[:-4]
             x = get_t_from_u(x).replace('-', ' ')
             displayAnime = animeRecHtml(Anilist().get_recommendation(x))
-        except:
+        except Exception as e:
+            print(str(e.with_traceback()))
             displayAnime = 'Not Available'
         ep_html, watch = get_eps_html(anime, anime)
     except:
@@ -138,7 +139,10 @@ def get_anime(anime):
         episodes = str(data.get('episodes'))
         genres = get_genre_html(data.get('genres'))
         displayAnime = animeRecHtml(data.get('recommendations').get('edges'))
-        ep_html, watch = get_eps_html(anime)
+        try:
+            ep_html, watch = get_eps_html(anime)
+        except:
+            ep_html, watch = '', '#'
         dub = data.get('format')
         season = data.get('season')
         year = data.get('seasonYear')
