@@ -160,9 +160,9 @@ def get_recent_html(data):
     return html
 
 
-def get_selector_btns(url, current, episodes: list):
+def get_selector_btns(url, current, episodes):
     if episodes < 2:
-        return '', 0
+        return ''
 
     selector = ''
 

@@ -67,11 +67,6 @@ def get_episode(anime, episode):
     anime = get_t_from_u(anime).lower()
     episode = int(episode)
 
-    if anime.endswith('-dub'):
-        anime = anime[:-4]
-    if anime.endswith('-sub'):
-        anime = anime[:-4]
-
     try:
         total_eps, ep = GOGO.get_episodes(anime)
         eps = GOGO.get_links(ep[episode-1])
