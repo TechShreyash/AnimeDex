@@ -108,17 +108,13 @@ def get_anime(anime):
         year = data[9]
         typo = data[10]
         status = data[11]
-        try:
-            x = anime.lower()
-            if x.endswith('-dub'):
-                x = x[:-4]
-            if x.endswith('-sub'):
-                x = x[:-4]
-            x = get_t_from_u(x).replace('-', ' ')
-            displayAnime = animeRecHtml(Anilist().get_recommendation(x))
-        except Exception as e:
-            print(str(e.with_traceback()))
-            displayAnime = 'Not Available'
+        x = anime.lower()
+        if x.endswith('-dub'):
+            x = x[:-4]
+        if x.endswith('-sub'):
+            x = x[:-4]
+        x = get_t_from_u(x).replace('-', ' ')
+        displayAnime = animeRecHtml(Anilist().get_recommendation(x))
         ep_html, watch = get_eps_html(anime, anime)
     except:
         anime = anime.lower()

@@ -1,6 +1,6 @@
 import random
 from programs.gogo import Anime, GoGoApi
-from programs.others import get_atitle, get_genre, get_urls
+from programs.others import get_atitle, get_genre, get_t_from_u, get_urls
 from programs.anilist import Anilist
 
 
@@ -68,6 +68,12 @@ ANIME_POS2 = """
 
 
 def animeRecHtml(data):
+    if not data:
+        return 'Not Available'
+        
+    if len(data)==0:
+        return 'Not Available'
+
     html = ''
 
     for i in data:
