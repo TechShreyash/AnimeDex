@@ -34,7 +34,7 @@
   - Install Requirements
     
     ```pip3 install -r requirements.txt```
-  - Start The Bot
+  - Start The Website
 
     ```python3 main.py```
 
