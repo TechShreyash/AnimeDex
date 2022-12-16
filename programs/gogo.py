@@ -1,7 +1,5 @@
 import requests
 from bs4 import BeautifulSoup as bs
-from programs.others import get_t_from_u
-from programs.vidstream import extract
 
 
 class Anime:
@@ -155,9 +153,6 @@ class GoGoApi:
             if not url.startswith('https'):
                 url = 'https:'+url
 
-            if 'gogohd' in url:
-                url = extract(url)
-
             if 'mixdrop.co' in url:
                 url = url.replace('mixdrop.co', 'mixdrop.ch')
 
@@ -177,16 +172,19 @@ class GoGoApi:
             div = soup.find('div', 'anime_muti_link')
             a = div.find_all('a')
             embeds = []
+
             for i in a:
                 url = i.get('data-video')
+
                 if not url.startswith('https'):
                     url = 'https:'+url
-                if 'gogohd' in url:
-                    url = extract(url)
+
                 if 'mixdrop.co' in url:
                     url = url.replace('mixdrop.co', 'mixdrop.ch')
+
                 if 'mp4upload' not in url:
                     embeds.append(url)
+
             data['DUB'] = embeds
             return data
         return data

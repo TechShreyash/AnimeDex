@@ -35,7 +35,7 @@ def decrypt(key, data):
     return AES.new(key, AES.MODE_CBC, iv=iv).decrypt(base64.b64decode(data))
 
 
-def extract(link):
+def extract_m3u8(link):
     crypto_data = get_crypto(link)
     decrypted_crypto = decrypt(s, crypto_data)
     new_id = decrypted_crypto[decrypted_crypto.index(b"&"):].strip(

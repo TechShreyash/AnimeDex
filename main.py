@@ -4,6 +4,8 @@ from flask import Flask, render_template, request, redirect
 from programs.anilist import Anilist
 from programs.others import get_atitle, get_other_title, get_studios, get_t_from_u
 from programs.gogo import GoGoApi
+from programs.vidstream import extract_m3u8
+
 GOGO = GoGoApi()
 app = Flask(__name__)
 
@@ -41,7 +43,9 @@ def home():
 def get_embed():
     url = request.args.get('url')
     if url:
-        if '.m3u8' in url or '.mp4' in url or '.mkv' in url:
+        if 'gogohd' in url:
+            file = extract_m3u8(url)
+        elif '.mp4' in url or '.mkv' in url:
             file = url
         else:
             file = request.args.get('file')

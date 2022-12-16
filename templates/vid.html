@@ -28,19 +28,12 @@
     <script type="text/javascript">
         const playerInstance = jwplayer("player");
         playerInstance.setup({
-
-            playlist: [{
-                title: "{{ title }}",
-                description: "You're Watching",
-                sources: [{
-                    file: "{{ m3u8 }}",
-                    label: "hls P",
-                    "image": "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/cover.jpg",
-                },
-
-                ],
-                TRACKS
-            }],
+            title: "{{ title }}",
+            description: "You're Watching",
+            file: "{{ m3u8 }}",
+            label: "hls P",
+            image: "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/cover.jpg",            
+            TRACKS
             autostart: false,
             abouttext: "AnimeDex",
             aboutlink: "/",
