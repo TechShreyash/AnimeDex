@@ -13,9 +13,7 @@ class Anime:
 
 class GoGoApi:
     def __init__(self) -> None:
-        self.host = 'gogoanime.ar'
-        self.api = ['https://api-techshreyash.up.railway.app/',
-                    'https://api.consumet.org/']
+        self.host = 'gogoanime.bid'
 
     def search(self, query, url_only=False):
         soup = bs(requests.get(
@@ -40,20 +38,6 @@ class GoGoApi:
                     Anime(url, img, released, title, None)
                 )
             return results
-
-    def anime_api(self, anime):
-        anime = get_t_from_u(anime).strip().replace(' ', '-')
-        for host in self.api:
-            try:
-                url = host + 'anime/gogoanime/info/' + anime
-                data = requests.get(url)
-                if data.status_code == 200:
-                    data = data.json()
-                    if data:
-                        break
-            except:
-                continue
-        return data
 
     def anime(self, anime):
         soup = bs(requests.get(
@@ -158,7 +142,7 @@ class GoGoApi:
 
             if 'mp4upload' not in url:
                 embeds.append(url)
-        dlink = soup.find('li','dowloads').find('a').get('href')
+        dlink = soup.find('li', 'dowloads').find('a').get('href')
         if 'dub' in anime:
             data['DUB'] = embeds
             data['DL'] = {}
@@ -189,8 +173,8 @@ class GoGoApi:
 
                 if 'mp4upload' not in url:
                     embeds.append(url)
-            
-            dlink = soup.find('li','dowloads').find('a').get('href')
+
+            dlink = soup.find('li', 'dowloads').find('a').get('href')
             data['DUB'] = embeds
             data['DL']['DUB'] = dlink
             return data
