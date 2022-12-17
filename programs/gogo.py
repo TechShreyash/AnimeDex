@@ -158,10 +158,15 @@ class GoGoApi:
 
             if 'mp4upload' not in url:
                 embeds.append(url)
+        dlink = soup.find('li','dowloads').find('a').get('href')
         if 'dub' in anime:
             data['DUB'] = embeds
+            data['DL'] = {}
+            data['DL']['DUB'] = dlink
         else:
             data['SUB'] = embeds
+            data['DL'] = {}
+            data['DL']['SUB'] = dlink
             anime = anime.split(
                 '-episode-')[0] + '-dub' + '-episode-' + anime.split('-episode-')[1]
             soup = bs(requests.get(
@@ -184,7 +189,9 @@ class GoGoApi:
 
                 if 'mp4upload' not in url:
                     embeds.append(url)
-
+            
+            dlink = soup.find('li','dowloads').find('a').get('href')
             data['DUB'] = embeds
+            data['DL']['DUB'] = dlink
             return data
         return data

@@ -266,6 +266,7 @@ def slider_gen():
 def episodeHtml(episode, title):
     isSub = episode.get('SUB')
     isDub = episode.get('DUB')
+    DL = episode.get('DL')
     sub = dub = ''
     defa = 0
     s, d = 1, 1
@@ -295,6 +296,18 @@ def episodeHtml(episode, title):
                         <a class="sobtn" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server {d}</a>
                     </div>"""
             d += 1
+
+    if DL:
+        link = DL.get('SUB')
+        if link:
+            sub += f"""<div class="sitem">
+                    <a class="sobtn download" target="_blank" href="{link}"><i class="fa fa-download"></i>Download</a>
+                </div>"""
+        link = DL.get('DUB')
+        if link:
+            dub += f"""<div class="sitem">
+                    <a class="sobtn download" target="_blank" href="{link}"><i class="fa fa-download"></i>Download</a>
+                </div>"""
 
     if sub != '':
         t4 = f"""<div class="server">
