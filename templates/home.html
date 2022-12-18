@@ -75,11 +75,14 @@
     <section>
         <div class="divox">
             <h2 id="latest">Recent Release</h2>
-            <div id="latest2">
+            <div id="latest2" class="recento">
                 RECENT_RELEASE
             </div>
         </div>
     </section>
+    <div id="load"><img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/ad/YouTube_loading_symbol_3_%28transparent%29.gif"
+            alt="Loading..."></div>
     <hr>
     <footer>
         <div>
@@ -96,7 +99,6 @@
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         const lazyImage = entry.target
-                        console.log("lazy loading ", lazyImage)
                         lazyImage.src = lazyImage.dataset.src
                     }
                 })

@@ -47,3 +47,36 @@ async function showSlides2() {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+// Infinite Scroll
+
+
+const container = document.querySelector('.recento');
+let page = 2
+let isLoading = 0
+
+function loadAnimes() {
+    if (isLoading == 0) {
+        isLoading = 1
+        const x = Array.from(
+            document.querySelectorAll('.poster')
+        ).pop()
+        fetch('/latest/' + page.toString())
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                container.innerHTML += data['html']
+                page += 1;
+                isLoading = 0
+                x.scrollIntoView()
+            })
+    }
+}
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight) {
+        loadAnimes();
+    }
+})

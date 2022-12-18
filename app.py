@@ -1,3 +1,4 @@
+from programs.anime_loader import get_GPage, get_html
 from programs.db import update_views, update_watch
 from programs.html_gen import animeRecHtml, episodeHtml, get_eps_html, get_recent_html, get_search_html, get_selector_btns, get_genre_html, get_trending_html, slider_gen
 from flask import Flask, render_template, request, redirect
@@ -194,3 +195,13 @@ def search_anime():
     )
     update_views('search-animedex')
     return html
+
+
+@app.route('/latest/<page>')
+def latest(page):
+    try:
+        data = get_GPage(page)
+        html = get_html(data)
+        return {'html': html}
+    except:
+        return {'html': ''}
