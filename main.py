@@ -1,6 +1,6 @@
 from programs.anime_loader import get_GPage, get_html
 from programs.db import update_views, update_watch
-from programs.html_gen import animeRecHtml, episodeHtml, get_eps_html, get_recent_html, get_search_html, get_selector_btns, get_genre_html, get_trending_html, slider_gen
+from programs.html_gen import animeRecHtml, episodeHtml, get_eps_html, get_eps_html2, get_recent_html, get_search_html, get_selector_btns, get_genre_html, get_trending_html, slider_gen
 from flask import Flask, render_template, request, redirect
 from programs.anilist import Anilist
 from programs.others import get_atitle, get_other_title, get_studios, get_t_from_u
@@ -75,10 +75,12 @@ def get_episode(anime, episode):
     try:
         total_eps, ep = GOGO.get_episodes(anime)
         eps = GOGO.get_links(ep[episode-1])
+        ep_list = get_eps_html2(ep)
     except:
         search = GOGO.search(anime, True)
         total_eps, ep = GOGO.get_episodes(search[0])
         eps = GOGO.get_links(ep[episode-1])
+        ep_list = get_eps_html2(ep)
 
     aid = ep[episode-1].split('-episode-')[0]
 
@@ -94,7 +96,7 @@ def get_episode(anime, episode):
     )
 
     update_watch(aid)
-    return temp.replace('PROSLO', btn_html).replace('SERVER', ep_html)
+    return temp.replace('PROSLO', btn_html).replace('SERVER', ep_html).replace('EPISOS',ep_list)
 
 
 @app.route('/anime/<anime>')
@@ -197,7 +199,7 @@ def search_anime():
     return html
 
 
-@app.route('/latest/<page>')
+@app.route('/api/latest/<page>')
 def latest(page):
     try:
         data = get_GPage(page)

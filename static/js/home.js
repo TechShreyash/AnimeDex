@@ -61,7 +61,7 @@ function loadAnimes() {
         const x = Array.from(
             document.querySelectorAll('.poster')
         ).pop()
-        fetch('/latest/' + page.toString())
+        fetch('/api/latest/' + page.toString())
             .then(response => {
                 return response.json();
             })

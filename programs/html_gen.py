@@ -28,6 +28,17 @@ def get_eps_html(anime, aid=None):
     return html, data[0].replace('-episode-', '/')
 
 
+def get_eps_html2(data):
+    x = """<a class="ep-btn" href="{}">{}</a>"""
+    html = ''
+    pos = 1
+    for i in data:
+        i = i.replace('-episode-', '/')
+        html += x.format(f'/episode/{i}', str(pos))
+        pos += 1
+    return html
+
+
 ANIME_POS = """
 <a href="{}"><div class="poster la-anime">
                     <div id="shadow1" class="shadow">
@@ -70,8 +81,8 @@ ANIME_POS2 = """
 def animeRecHtml(data):
     if not data:
         return 'Not Available'
-        
-    if len(data)==0:
+
+    if len(data) == 0:
         return 'Not Available'
 
     html = ''
