@@ -54,23 +54,34 @@ function sleep(ms) {
 const container = document.querySelector('.recento');
 let page = 2
 let isLoading = 0
+let errCount = 0
 
 function loadAnimes() {
-    if (isLoading == 0) {
-        isLoading = 1
-        const x = Array.from(
-            document.querySelectorAll('.poster')
-        ).pop()
-        fetch('/api/latest/' + page.toString())
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                container.innerHTML += data['html']
-                page += 1;
-                isLoading = 0
-                x.scrollIntoView()
-            })
+    try {
+        if (isLoading == 0) {
+            isLoading = 1
+            const x = Array.from(
+                document.querySelectorAll('.poster')
+            ).pop()
+            fetch('/api/latest/' + page.toString())
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    container.innerHTML += data['html']
+                    x.scrollIntoView()
+                    page += 1;
+                    isLoading = 0
+                })
+            errCount = 0
+        }
+    } catch (error) {
+        isLoading = 0
+        errCount += 1
+        if (errCount < 5) {
+            setTimeout(loadAnimes(), 2000)
+        }
+
     }
 }
 
