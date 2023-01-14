@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/x-icon"
+        href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico">
     <title>AnimeDex - Watch High Quality Anime Online</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="title" content="AnimeDex - Watch High Quality Anime Online" />
@@ -97,15 +99,15 @@
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        const lazyImage = entry.target
-                        lazyImage.src = lazyImage.dataset.src
+                        const lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
                     }
-                })
+                });
             });
-            const arr = document.querySelectorAll('img.lzy_img')
+            const arr = document.querySelectorAll('img.lzy_img');
             arr.forEach((v) => {
                 imageObserver.observe(v);
-            })
+            });
         })
     </script>
     <script src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/home.min.js"></script>

@@ -3,6 +3,8 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/x-icon"
+        href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico">
     <title>AnimeDex VideoPlayer</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -50,36 +52,36 @@
             width: '100%'
         });
 
-        let player_url = "{{ m3u8 }}"
-        player = playerInstance
+        let player_url = "{{ m3u8 }}";
+        player = playerInstance;
         player.on('error', function () {
             debounce = setTimeout(function () {
                 if (errors < 5) {
-                    errors += 1
-                    isRun = false
+                    errors += 1;
+                    isRun = false;
                     player.load([{
                         file: player_url
                     }]);
-                    player.play()
+                    player.play();
                 }
             }.bind(this), 1000);
         }.bind(this));
 
-        let position = 0
-        let isRun = true
-        let errors = 0
+        let position = 0;
+        let isRun = true;
+        let errors = 0;
 
         player.on('firstFrame', function () {
             player.seek(position);
-            isRun = true
+            isRun = true;
         });
 
         function saveDur() {
             if (isRun == true) {
-                position = parseInt(this.player.getPosition())
+                position = parseInt(this.player.getPosition());
                 setTimeout(saveDur, 1000);
             }
-        }
+        };
         saveDur();
     </script>
 </body>

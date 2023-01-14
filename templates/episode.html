@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/x-icon"
+        href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico">
     <title>Watch Episode {{ title }} - {{ heading }} - AnimeDex</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="title" content="Watch Episode {{ title }} - {{ heading }} - AnimeDex">
@@ -99,14 +101,14 @@
     <hr>
     <script>
         function selectServer(btn) {
-            const buttons = document.getElementsByClassName('sobtn')
-            const iframe = document.getElementById('AnimeDexFrame')
-            iframe.src = btn.getAttribute('data-value')
+            const buttons = document.getElementsByClassName('sobtn');
+            const iframe = document.getElementById('AnimeDexFrame');
+            iframe.src = btn.getAttribute('data-value');
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].className = "sobtn";
             }
-            btn.className = "sobtn sactive"
-        }
+            btn.className = "sobtn sactive";
+        };
     </script>
 </body>
 

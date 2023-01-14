@@ -18,7 +18,7 @@ def favicon():
 
 @app.route('/')
 def home():
-    html = render_template('home.html')
+    html = render_template('home.min.html')
     div1 = get_trending_html()
     try:
         div2 = get_recent_html(GOGO.home())
@@ -38,65 +38,6 @@ def home():
     )
     update_views('home-animedex')
     return html
-
-
-@app.route('/embed')
-def get_embed():
-    url = request.args.get('url')
-    if url:
-        if 'gogohd' in url:
-            file = extract_m3u8(url)
-        elif '.mp4' in url or '.mkv' in url:
-            file = url
-        else:
-            file = request.args.get('file')
-    if not file:
-        return redirect(url)
-    sub = request.args.get('sub')
-    title = request.args.get('title')
-    if sub != None:
-        track = """tracks: [{
-                "kind": "captions",
-                file: "sopu",
-                label: 'English',
-                "default": true
-            }],""".replace('sopu', sub)
-    else:
-        track = ''
-
-    return render_template('vid.html', m3u8=file, title=title).replace('TRACKS', track)
-
-
-@app.route('/episode/<anime>/<episode>')
-def get_episode(anime, episode):
-    anime = get_t_from_u(anime).lower()
-    episode = int(episode)
-
-    try:
-        total_eps, ep = GOGO.get_episodes(anime)
-        eps = GOGO.get_links(ep[episode-1])
-        ep_list = get_eps_html2(ep)
-    except:
-        search = GOGO.search(anime, True)
-        total_eps, ep = GOGO.get_episodes(search[0])
-        eps = GOGO.get_links(ep[episode-1])
-        ep_list = get_eps_html2(ep)
-
-    aid = ep[episode-1].split('-episode-')[0]
-
-    btn_html = get_selector_btns(
-        f"/episode/{anime}/", int(episode), int(total_eps))
-    ep_html, iframe = episodeHtml(eps, f'{anime} - Episode {episode}')
-
-    temp = render_template(
-        'episode.html',
-        title=f'{anime} - Episode {episode}',
-        heading=anime,
-        iframe=iframe
-    )
-
-    update_watch(aid)
-    return temp.replace('PROSLO', btn_html).replace('SERVER', ep_html).replace('EPISOS', ep_list)
 
 
 @app.route('/anime/<anime>')
@@ -152,7 +93,7 @@ def get_anime(anime):
         typo = data.get('format')
         status = data.get('status')
 
-    html = render_template('anime.html',
+    html = render_template('anime.min.html',
                            img=img,
                            title=title,
                            DUB=dub,
@@ -176,6 +117,38 @@ def get_anime(anime):
     return html
 
 
+@app.route('/episode/<anime>/<episode>')
+def get_episode(anime, episode):
+    anime = get_t_from_u(anime).lower()
+    episode = int(episode)
+
+    try:
+        total_eps, ep = GOGO.get_episodes(anime)
+        eps = GOGO.get_links(ep[episode-1])
+        ep_list = get_eps_html2(ep)
+    except:
+        search = GOGO.search(anime, True)
+        total_eps, ep = GOGO.get_episodes(search[0])
+        eps = GOGO.get_links(ep[episode-1])
+        ep_list = get_eps_html2(ep)
+
+    aid = ep[episode-1].split('-episode-')[0]
+
+    btn_html = get_selector_btns(
+        f"/episode/{anime}/", int(episode), int(total_eps))
+    ep_html, iframe = episodeHtml(eps, f'{anime} - Episode {episode}')
+
+    temp = render_template(
+        'episode.min.html',
+        title=f'{anime} - Episode {episode}',
+        heading=anime,
+        iframe=iframe
+    )
+
+    update_watch(aid)
+    return temp.replace('PROSLO', btn_html).replace('SERVER', ep_html).replace('EPISOS', ep_list)
+
+
 @app.route('/search', methods=['GET'])
 def search_anime():
     anime = request.args.get('query').lower().strip()
@@ -185,7 +158,7 @@ def search_anime():
     if anime.endswith('-sub'):
         anime = anime[:-4]
 
-    html = render_template('search.html',
+    html = render_template('search.min.html',
                            aid=anime.replace('+', ' '))
 
     data = GOGO.search(anime)
@@ -197,6 +170,33 @@ def search_anime():
     )
     update_views('search-animedex')
     return html
+
+
+@app.route('/embed')
+def get_embed():
+    url = request.args.get('url')
+    if url:
+        if 'gogohd' in url:
+            if request.args.get('token'):
+                url += f'&token={request.args.get("token")}'
+            if request.args.get('expires'):
+                url += f'&expires={request.args.get("expires")}'
+            file = extract_m3u8(url)
+        elif '.mp4' in url or '.mkv' in url:
+            file = url
+        else:
+            file = request.args.get('file')
+    if not file:
+        return redirect(url)
+    sub = request.args.get('sub')
+    title = request.args.get('title')
+    if sub != None:
+        track = """tracks: [{"kind": "captions", file: "sopu", label: 'English', "default": true}],""".replace(
+            'sopu', sub)
+    else:
+        track = ''
+
+    return render_template('vid.min.html', m3u8=file, title=title).replace('TRACKS', track)
 
 
 @app.route('/api/latest/<page>')

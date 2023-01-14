@@ -39,43 +39,9 @@ def get_eps_html2(data):
     return html
 
 
-ANIME_POS = """
-<a href="{}"><div class="poster la-anime">
-                    <div id="shadow1" class="shadow">
-                            <div class="dubb">{}</div>
-                            <div class="dubb dubb2">{}</div>
-                        </div>
-                        <div id="shadow2" class="shadow">
-                        <img class="lzy_img" src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/loading.gif" data-src="{}">
-                    </div>
-                    <div class="la-details">
-                        <h3>{}</h3>
-                        <div id="extra">
-                        <span>{}</span>
-                        <span class="dot"></span>
-                        <span>{}</span>                        
-                        </div>
-                    </div>
-                </div></a>
-"""
+ANIME_POS = """<a href="{}"><div class="poster la-anime"> <div id="shadow1" class="shadow"> <div class="dubb">{}</div><div class="dubb dubb2">{}</div></div><div id="shadow2" class="shadow"> <img class="lzy_img" src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/loading.gif" data-src="{}"> </div><div class="la-details"> <h3>{}</h3> <div id="extra"> <span>{}</span> <span class="dot"></span> <span>{}</span> </div></div></div></a>"""
 
-ANIME_POS2 = """
-<a href="{}"><div class="poster la-anime">
-                    <div id="shadow1" class="shadow">
-                            <div class="dubb">{}</div>
-                        
-                        </div>
-                        <div id="shadow2" class="shadow">
-                        <img class="lzy_img" src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/loading.gif" data-src="{}">
-                    </div>
-                    <div class="la-details">
-                        <h3>{}</h3>
-                        <div id="extra">                        
-                        <span>{}</span>                        
-                        </div>
-                    </div>
-                </div></a>
-"""
+ANIME_POS2 = """<a href="{}"><div class="poster la-anime"> <div id="shadow1" class="shadow"> <div class="dubb">{}</div></div><div id="shadow2" class="shadow"> <img class="lzy_img" src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/loading.gif" data-src="{}"> </div><div class="la-details"> <h3>{}</h3> <div id="extra"> <span>{}</span> </div></div></div></a>"""
 
 
 def animeRecHtml(data):
@@ -184,63 +150,31 @@ def get_selector_btns(url, current, episodes):
     selector = ''
 
     if current == 1:
-        x = """<a class="btns" href="usrl"><button
-                    class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
+        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
 
         selector += x.replace('usrl', url +
                               str(current+1)).replace('NEXT', str(current+1))
 
     elif current == episodes:
-        x = """<a class="btns" href="usrl"><button
-                    class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i
-                        class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
+        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
 
         selector += x.replace('usrl', url + str(current-1)).replace(
             'PREV', str(current-1))
 
     else:
-        x = """<a class="btns" href="usrl"><button
-                    class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i
-                        class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
+        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg "><i class="fa fa-arrow-circle-left"></i>Episode PREV</button></a>"""
 
         selector += x.replace('usrl',
                               url + str(current-1)).replace('PREV', str(current-1))
 
-        x = """<a class="btns" href="usrl"><button
-                    class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
+        x = """<a class="btns" href="usrl"><button class="sbtn inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ">Episode NEXT<i style="margin-left:10px; margin-right: auto;" class="fa fa-arrow-circle-right"></i></button></a>"""
 
         selector += x.replace('usrl',
                               url + str(current+1)).replace('NEXT', str(current+1))
     return selector
 
 
-SLIDER_HTML = """<div class="mySlides fade">
-                <div class="data-slider">
-                    <p class="spotlight">{}</p>
-                    <h1>{}</h1>
-                    <div class="extra1">
-
-                        <span class="year"><i class="fa fa-play-circle"></i>{}</span>
-                        <span class="year year2"><i class="fa fa-calendar"></i>{}</span>
-                        <span class="cbox cbox1">{}</span>
-                        <span class="cbox cbox2">HD</span>
-                    </div>
-                    <p class="small-synop">{}</p>
-
-                    <div id="watchh">
-                        <a href="{}" class="watch-btn">
-                            <i class="fa fa-play-circle"></i> Watch Now
-                        </a>
-                        <a href="{}" class="watch-btn watch-btn2">
-                            <i class="fa fa-info-circle"></i> Details<i class="fa fa-angle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="shado">
-                    <a href="{}"></a>
-                </div>
-                <img src="{}">
-            </div>"""
+SLIDER_HTML = """<div class="mySlides fade"> <div class="data-slider"> <p class="spotlight">{}</p><h1>{}</h1> <div class="extra1"> <span class="year"><i class="fa fa-play-circle"></i>{}</span> <span class="year year2"><i class="fa fa-calendar"></i>{}</span> <span class="cbox cbox1">{}</span> <span class="cbox cbox2">HD</span> </div><p class="small-synop">{}</p><div id="watchh"> <a href="{}" class="watch-btn"> <i class="fa fa-play-circle"></i> Watch Now </a> <a href="{}" class="watch-btn watch-btn2"> <i class="fa fa-info-circle"></i> Details<i class="fa fa-angle-right"></i> </a> </div></div><div class="shado"> <a href="{}"></a> </div><img src="{}"> </div>"""
 
 
 def slider_gen():
@@ -284,69 +218,38 @@ def episodeHtml(episode, title):
 
     if isSub:
         for i in isSub:
+            print(i)
             if defa == 0:
                 defa = f'/embed?url={i}&title={title}'
-                sub += f"""<div class="sitem">
-                        <a class="sobtn sactive" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server {s}</a>
-                    </div>"""
+                sub += f"""<div class="sitem"> <a class="sobtn sactive" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server{s}</a> </div>"""
             else:
-                sub += f"""<div class="sitem">
-                        <a class="sobtn" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server {s}</a>
-                    </div>"""
+                sub += f"""<div class="sitem"> <a class="sobtn" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server{s}</a> </div>"""
             s += 1
 
     if isDub:
         for i in isDub:
             if defa == 0:
                 defa = f'/embed?url={i}&title={title}'
-                dub += f"""<div class="sitem">
-                        <a class="sobtn sactive" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server {d}</a>
-                    </div>"""
+                dub += f"""<div class="sitem"> <a class="sobtn sactive" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server{d}</a> </div>"""
             else:
-                dub += f"""<div class="sitem">
-                        <a class="sobtn" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server {d}</a>
-                    </div>"""
+                dub += f"""<div class="sitem"> <a class="sobtn" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server{d}</a> </div>"""
             d += 1
 
     if DL:
         link = DL.get('SUB')
         if link:
-            sub += f"""<div class="sitem">
-                    <a class="sobtn download" target="_blank" href="{link}"><i class="fa fa-download"></i>Download</a>
-                </div>"""
+            sub += f"""<div class="sitem"> <a class="sobtn download" target="_blank" href="{link}"><i class="fa fa-download"></i>Download</a> </div>"""
         link = DL.get('DUB')
         if link:
-            dub += f"""<div class="sitem">
-                    <a class="sobtn download" target="_blank" href="{link}"><i class="fa fa-download"></i>Download</a>
-                </div>"""
+            dub += f"""<div class="sitem"> <a class="sobtn download" target="_blank" href="{link}"><i class="fa fa-download"></i>Download</a> </div>"""
 
     if sub != '':
-        t4 = f"""<div class="server">
-                <div class="stitle">
-                    <i class="fa fa-closed-captioning"></i>SUB:
-                </div>
-
-                <div class="slist">
-                    
-                    {sub}
-                </div>
-            </div>"""
+        t4 = f"""<div class="server"> <div class="stitle"> <i class="fa fa-closed-captioning"></i>SUB: </div><div class="slist">{sub}</div></div>"""
     else:
         t4 = ''
 
     if dub != '':
-        t5 = f"""
-        <div class="server sd">
-                <div class="stitle">
-                    <i class="fa fa-microphone-alt"></i>DUB:
-                </div>
-
-                <div class="slist">
-                    {dub}
-                    
-                </div>
-            </div>
-        """
+        t5 = f""" <div class="server sd"> <div class="stitle"> <i class="fa fa-microphone-alt"></i>DUB: </div><div class="slist">{dub}</div></div>"""
     else:
         t5 = ''
 

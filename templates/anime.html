@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/x-icon"
+        href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico">
     <title>Watch {{ title }} - AnimeDex</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="title" content="Watch {{ title }} - AnimeDex">
@@ -140,22 +142,6 @@
         <div class="divox">
             <h2 id="latest">Similar Animes</h2>
             <div id="latest2">
-                <!-- <div class="poster la-anime">
-                    <div class="shadow">
-                        <div class="dubb">DUB</div>
-                        <div class="dubb dubb2">EP 13/13</div>
-                        <img src="https://gogocdn.net/cover/horimiya.png">
-                    </div>
-                    <div class="la-details">
-                        <h3>Horimiya (DUB)</h3>
-                        <span>TV Series</span>
-                        <span class="dot"></span>
-                        <span>Completed</span>
-                        <span class="dot"></span>
-                        <span>2021</span>
-                    </div>
-                </div> -->
-
                 DISPLAY_ANIME
             </div>
         </div>
@@ -174,15 +160,15 @@
             const imageObserver = new IntersectionObserver((entries, imgObserver) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        const lazyImage = entry.target
-                        lazyImage.src = lazyImage.dataset.src
+                        const lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
                     }
                 })
             });
-            const arr = document.querySelectorAll('img.lzy_img')
+            const arr = document.querySelectorAll('img.lzy_img');
             arr.forEach((v) => {
                 imageObserver.observe(v);
-            })
+            });
         })
     </script>
 </body>
