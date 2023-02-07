@@ -133,7 +133,6 @@ def get_episode(anime, episode):
         ep_list = get_eps_html2(ep)
 
     aid = ep[episode-1].split('-episode-')[0]
-    print(eps)
 
     btn_html = get_selector_btns(
         f"/episode/{anime}/", int(episode), int(total_eps))

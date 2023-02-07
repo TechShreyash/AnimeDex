@@ -144,11 +144,11 @@ class GoGoApi:
                 embeds.append(url)
         dlink = soup.find('li', 'dowloads').find('a').get('href')
         if 'dub' in anime:
-            data['DUB'] = embeds
+            data['DUB'] = embeds[1:]
             data['DL'] = {}
             data['DL']['DUB'] = dlink
         else:
-            data['SUB'] = embeds
+            data['SUB'] = embeds[1:]
             data['DL'] = {}
             data['DL']['SUB'] = dlink
             anime = anime.split(
@@ -175,7 +175,7 @@ class GoGoApi:
                     embeds.append(url)
 
             dlink = soup.find('li', 'dowloads').find('a').get('href')
-            data['DUB'] = embeds
+            data['DUB'] = embeds[1:]
             data['DL']['DUB'] = dlink
             return data
         return data
