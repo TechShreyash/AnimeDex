@@ -36,6 +36,7 @@ def decrypt(key, data):
 
 
 def extract_m3u8(link):
+    return link
     crypto_data = get_crypto(link)
     decrypted_crypto = decrypt(s, crypto_data)
     new_id = decrypted_crypto[decrypted_crypto.index(b"&"):].strip(
