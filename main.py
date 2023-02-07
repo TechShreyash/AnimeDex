@@ -181,6 +181,7 @@ def get_embed():
                 url += f'&token={request.args.get("token")}'
             if request.args.get('expires'):
                 url += f'&expires={request.args.get("expires")}'
+            return redirect(url)
             file = extract_m3u8(url)
         elif '.mp4' in url or '.mkv' in url:
             file = url
