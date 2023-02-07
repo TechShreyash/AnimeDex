@@ -133,6 +133,7 @@ def get_episode(anime, episode):
         ep_list = get_eps_html2(ep)
 
     aid = ep[episode-1].split('-episode-')[0]
+    print(eps)
 
     btn_html = get_selector_btns(
         f"/episode/{anime}/", int(episode), int(total_eps))
@@ -176,7 +177,7 @@ def search_anime():
 def get_embed():
     url = request.args.get('url')
     if url:
-        if 'gogohd' in url:
+        if 'playgo1.cc' in url:
             if request.args.get('token'):
                 url += f'&token={request.args.get("token")}'
             if request.args.get('expires'):
@@ -184,19 +185,13 @@ def get_embed():
             file = extract_m3u8(url)
         elif '.mp4' in url or '.mkv' in url:
             file = url
-        else:
-            file = request.args.get('file')
+    else:
+        file = request.args.get('file')
     if not file:
         return redirect(url)
-    sub = request.args.get('sub')
     title = request.args.get('title')
-    if sub != None:
-        track = """tracks: [{"kind": "captions", file: "sopu", label: 'English', "default": true}],""".replace(
-            'sopu', sub)
-    else:
-        track = ''
 
-    return render_template('vid.min.html', m3u8=file, title=title).replace('TRACKS', track)
+    return render_template('vid.html', m3u8=file, title=title)
 
 
 @app.route('/api/latest/<page>')

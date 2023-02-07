@@ -1,88 +1,80 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/x-icon"
-        href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico">
     <title>AnimeDex VideoPlayer</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/player.min.js'></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/css/video.min.css">
+
     <style type="text/css">
         body {
             background-color: #000;
         }
-
-        #player {
-            position: absolute;
-            width: 100% !important;
-            height: 100% !important;
+        
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+        
+        video {
+            width: 100%;
+            height: 100%;
         }
     </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.css">
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
+    <script src="https://unpkg.com/plyr@3"></script>
 </head>
 
 <body>
-    <div id="player"></div>
 
-    <script type="text/javascript">
-        const playerInstance = jwplayer("player");
-        playerInstance.setup({
-            title: "{{ title }}",
-            description: "You're Watching",
-            file: "{{ m3u8 }}",
-            label: "hls P",
-            image: "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/cover.jpg",
-            TRACKS
-            autostart: false,
-            abouttext: "AnimeDex",
-            aboutlink: "/",
-            logo: {
-                file: "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/headerr.png"
-            },
-            skin: {
-                name: "netflix"
-            },
-            displaytitle: true,
-            displaydescription: true,
-            stretching: 'fill',
-            height: '100%',
-            width: '100%'
-        });
+    <div class="container">
+        <video controls crossorigin playsinline>
+            <source type="application/x-mpegURL" src="{{ m3u8 }}">
+        </video>
+    </div>
 
-        let player_url = "{{ m3u8 }}";
-        player = playerInstance;
-        player.on('error', function () {
-            debounce = setTimeout(function () {
-                if (errors < 5) {
-                    errors += 1;
-                    isRun = false;
-                    player.load([{
-                        file: player_url
-                    }]);
-                    player.play();
-                }
-            }.bind(this), 1000);
-        }.bind(this));
+    <script>
+        const source = '{{ m3u8 }}';
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.querySelector("video");
 
-        let position = 0;
-        let isRun = true;
-        let errors = 0;
+            const defaultOptions = {
+                title: '{{ title }}'
+            };
 
-        player.on('firstFrame', function () {
-            player.seek(position);
-            isRun = true;
-        });
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(source);
+                hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+                    const availableQualities = hls.levels.map((l) => l.height);
 
-        function saveDur() {
-            if (isRun == true) {
-                position = parseInt(this.player.getPosition());
-                setTimeout(saveDur, 1000);
+                    defaultOptions.quality = {
+                        default: availableQualities[0],
+                        options: availableQualities,
+                        forced: true,
+                        onChange: (e) => updateQuality(e),
+                    };
+                    const player = new Plyr(video, defaultOptions);
+                });
+                hls.attachMedia(video);
+                window.hls = hls;
+            } else {
+                const player = new Plyr(video, defaultOptions);
+            };
+
+            function updateQuality(newQuality) {
+                window.hls.levels.forEach((level, levelIndex) => {
+                    if (level.height === newQuality) {
+                        window.hls.currentLevel = levelIndex;
+                    }
+                });
             }
-        };
-        saveDur();
+        });
     </script>
 </body>
 

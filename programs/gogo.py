@@ -13,7 +13,7 @@ class Anime:
 
 class GoGoApi:
     def __init__(self) -> None:
-        self.host = 'gogoanime.bid'
+        self.host = 'www1.gogoanime.bid'
 
     def search(self, query, url_only=False):
         soup = bs(requests.get(
@@ -144,11 +144,11 @@ class GoGoApi:
                 embeds.append(url)
         dlink = soup.find('li', 'dowloads').find('a').get('href')
         if 'dub' in anime:
-            data['DUB'] = embeds[1:]
+            data['DUB'] = embeds
             data['DL'] = {}
             data['DL']['DUB'] = dlink
         else:
-            data['SUB'] = embeds[1:]
+            data['SUB'] = embeds
             data['DL'] = {}
             data['DL']['SUB'] = dlink
             anime = anime.split(
@@ -175,7 +175,7 @@ class GoGoApi:
                     embeds.append(url)
 
             dlink = soup.find('li', 'dowloads').find('a').get('href')
-            data['DUB'] = embeds[1:]
+            data['DUB'] = embeds
             data['DL']['DUB'] = dlink
             return data
         return data
