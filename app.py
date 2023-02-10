@@ -16,13 +16,8 @@ def favicon():
     return redirect('https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico')
 
 
-ping_count = 0
-
-
 @app.route('/')
 def home():
-    global ping_count
-    ping_count += 1
     html = render_template('home.min.html')
     div1 = get_trending_html()
     try:
@@ -208,3 +203,5 @@ def latest(page):
         return {'html': html}
     except:
         return {'html': ''}
+
+

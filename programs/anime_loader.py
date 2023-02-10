@@ -69,5 +69,3 @@ def get_html(data):
         html += x
 
     return html
-
-def top_anime():
