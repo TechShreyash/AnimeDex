@@ -218,7 +218,6 @@ def episodeHtml(episode, title):
 
     if isSub:
         for i in isSub:
-            print(i)
             if defa == 0:
                 defa = f'/embed?url={i}&title={title}'
                 sub += f"""<div class="sitem"> <a class="sobtn sactive" onclick="selectServer(this)" data-value="/embed?url={i}&title={title}">Server{s}</a> </div>"""

@@ -175,7 +175,7 @@ def search_anime():
 @app.route('/embed')
 def get_embed():
     url = request.args.get('url')
-    file = None
+    file = False
     if url:
         if 'playgo1.cc' in url:
             if request.args.get('token'):
