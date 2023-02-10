@@ -175,13 +175,14 @@ def search_anime():
 @app.route('/embed')
 def get_embed():
     url = request.args.get('url')
+    file = False
     if url:
-        if 'playgo1.cc' in url:
+        if 'playgo1' in url:
             if request.args.get('token'):
                 url += f'&token={request.args.get("token")}'
             if request.args.get('expires'):
                 url += f'&expires={request.args.get("expires")}'
-            return redirect(url)
+
             file = extract_m3u8(url)
         elif '.mp4' in url or '.mkv' in url:
             file = url
@@ -202,3 +203,5 @@ def latest(page):
         return {'html': html}
     except:
         return {'html': ''}
+
+

@@ -177,7 +177,7 @@ def get_embed():
     url = request.args.get('url')
     file = False
     if url:
-        if 'playgo1.cc' in url:
+        if 'playgo1' in url:
             if request.args.get('token'):
                 url += f'&token={request.args.get("token")}'
             if request.args.get('expires'):
