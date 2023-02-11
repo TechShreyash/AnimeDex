@@ -1,3 +1,4 @@
+import requests
 import random
 from programs.gogo import Anime, GoGoApi
 from programs.others import get_atitle, get_genre, get_t_from_u, get_urls
@@ -78,25 +79,21 @@ def animeRecHtml(data):
 
 
 def get_trending_html():
-    data = Anilist().popular()
+    data: dict = requests.get(
+        'https://api.animedex.live/top').json().get('top')
     html = ''
-
-    for i in data:
-        img = i.get('coverImage')
-        if img:
-            img = img.get('medium').replace('small', 'medium')
-        else:
-            img = i.get('bannerImage')
-        title = get_atitle(i.get('title'))
-        url = get_urls(title)
+    for id, i in data:
+        img = i[5]
+        title = i[0]
+        url = get_urls(id)
         x = ANIME_POS.format(
             url,
-            get_genre(i.get('genres')),
-            'Ep '+str(i.get('episodes')).strip(),
+            i[1],
+            'Ep '+str(i[2]),
             img,
             title,
-            i.get('type'),
-            i.get('status')
+            i[3],
+            i[4]
         )
         html += x
 
