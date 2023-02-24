@@ -1,25 +1,25 @@
 from datetime import datetime
 import requests
 
-cache = {'recommend': {}}
+cache = {"recommend": {}}
 
 
 def get_season(future: bool = False):
     k = datetime.now()
     m = k.month
     if future:
-        m = m+3
+        m = m + 3
     y = k.year
     if m > 12:
-        y = y+1
+        y = y + 1
     if m in [1, 2, 3] or m > 12:
-        return 'WINTER', y
+        return "WINTER", y
     if m in [4, 5, 6]:
-        return 'SPRING', y
+        return "SPRING", y
     if m in [7, 8, 9]:
-        return 'SUMMER', y
+        return "SUMMER", y
     if m in [10, 11, 12]:
-        return 'FALL', y
+        return "FALL", y
 
 
 class Anilist:
@@ -133,67 +133,55 @@ query ($id: Int, $idMal: Int, $search: String) {
         """
 
     def trending(self):
-        if cache.get('trending'):
-            return cache.get('trending')
+        if cache.get("trending"):
+            return cache.get("trending")
 
         s, y = get_season()
-        vars = {"s": s, "y": y, "sort": 'TRENDING_DESC'}
+        vars = {"s": s, "y": y, "sort": "TRENDING_DESC"}
         data = requests.post(
-            'https://graphql.anilist.co',
-            json={
-                'query': self.BROWSE_QUERY,
-                'variables': vars
-            }
+            "https://graphql.anilist.co",
+            json={"query": self.BROWSE_QUERY, "variables": vars},
         ).json()
-        data = data.get('data').get('Page').get('media')
+        data = data.get("data").get("Page").get("media")
         if data:
-            cache['trending'] = data
+            cache["trending"] = data
         return data
 
     def popular(self):
-        if cache.get('popular'):
-            return cache.get('popular')
+        if cache.get("popular"):
+            return cache.get("popular")
 
         s, y = get_season()
-        vars = {"s": s, "y": y, "sort": 'POPULARITY_DESC'}
+        vars = {"s": s, "y": y, "sort": "POPULARITY_DESC"}
         data = requests.post(
-            'https://graphql.anilist.co',
-            json={
-                'query': self.BROWSE_QUERY,
-                'variables': vars
-            }
+            "https://graphql.anilist.co",
+            json={"query": self.BROWSE_QUERY, "variables": vars},
         ).json()
-        data = data.get('data').get('Page').get('media')
+        data = data.get("data").get("Page").get("media")
         if data:
-            cache['popular'] = data
+            cache["popular"] = data
         return data
 
     def anime(self, anime):
         s, y = get_season()
-        vars = {'search': anime}
+        vars = {"search": anime}
         data = requests.post(
-            'https://graphql.anilist.co',
-            json={
-                'query': self.ANIME_QUERY,
-                'variables': vars
-            }
+            "https://graphql.anilist.co",
+            json={"query": self.ANIME_QUERY, "variables": vars},
         ).json()
-        return data.get('data').get('Media')
+        return data.get("data").get("Media")
 
     def get_recommendation(self, anime):
-        if cache.get('recommend').get(anime):
-            return cache.get('recommend').get(anime)
+        if cache.get("recommend").get(anime):
+            return cache.get("recommend").get(anime)
 
         s, y = get_season()
-        vars = {'search': anime}
+        vars = {"search": anime}
         data = requests.post(
-            'https://graphql.anilist.co',
-            json={
-                'query': self.ANIME_QUERY,
-                'variables': vars
-            }
+            "https://graphql.anilist.co",
+            json={"query": self.ANIME_QUERY, "variables": vars},
         ).json()
-        data = data.get('data').get('Media')
+        data = data.get("data").get("Media")
         if data:
-            cache['recommend'][anime] = data
+            cache["recommend"][anime] = data
         return data

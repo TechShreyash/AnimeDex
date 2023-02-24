@@ -1,7 +1,7 @@
-<p align="center"><a href="https://github.com/TechShreyash/AutoAnimeBot"><img src="./static/img/home.png"></a></p> 
+<p align="center"><a href="https://animedex.live"><img src="./static/img/home.png"></a></p> 
 
-<h1 align="center"><img src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/headerr.png"></h1>
-<h2 align="center"><b>Watch Animes Online For Free</b></h4>
+<h1 align="center"><a href="https://animedex.live"><img src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/headerr.png"></a></h1>
+<h2 align="center"><a href="https://animedex.live"><b>Watch Animes Online For Free</b></a></h4>
 
 <p align="center" > <img alt="GitHub Forks" src="https://img.shields.io/github/forks/TechShreyash/AnimeDex?label=%F0%9F%8D%B4Forks&logoColor=blue&style=social"> <img alt="GitHub Repo Stars" src="https://img.shields.io/github/stars/TechShreyash/AnimeDex?label=%E2%AD%90%EF%B8%8FStars&logoColor=blue&style=social"> </p>
 
@@ -14,6 +14,7 @@
 - Uses Anilist To Get Data
 - And GoGo Anime For Episodes
 - Can Be Deployed To Vercel.com And Repl.it OR Any Other Hosting Service
+- Website : https://animedex.live
 
 <hr><br>
 
@@ -39,6 +40,7 @@
   - Start The Website
 
     ```python3 main.py```
+  - Demo : https://animedex.live
 
   - Need Guide : 
     - https://docs.digitalocean.com/tutorials/app-deploy-flask-app/
@@ -65,6 +67,17 @@
 <br>
 
 [![Telegram Channel](https://img.shields.io/static/v1?label=Join&message=Telegram%20Channel&color=blueviolet&style=for-the-badge&logo=telegram&logoColor=violet)](https://telegram.me/TechZBots) [![Telegram Group](https://img.shields.io/static/v1?label=Join&message=Telegram%20Group&color=blueviolet&style=for-the-badge&logo=telegram&logoColor=violet)](https://telegram.me/TechZBots_Support)
+
+<hr>
+<br>
+
+### 📊 AnimeDex Stats
+
+<br>
+
+<img src="https://api.animedex.live/stats/over">
+
+<img src="https://api.animedex.live/stats/day">
 
 <hr>
 <br>

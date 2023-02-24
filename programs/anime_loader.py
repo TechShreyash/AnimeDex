@@ -32,27 +32,26 @@ class Anime:
 
 
 def get_GPage(page):
-    url = f'https://gogoanime.bid/?page={str(page)}'
-    soup = bs(requests.get(url).content, 'html.parser')
-    div = soup.find('ul', 'items')
-    animes = div.find_all('li')
+    url = f"https://gogoanime.bid/?page={str(page)}"
+    soup = bs(requests.get(url).content, "html.parser")
+    div = soup.find("ul", "items")
+    animes = div.find_all("li")
     results = []
     for i in animes:
-        url = '/anime' + \
-            i.find('a').get('href').replace(
-                '/category/', '').split('-episode-')[0]
-        img = i.find('img').get('src')
-        lang = i.find('div', 'type').get('class')[1].replace('ic-', '')
-        title = i.find('a').get('title')
-        episode = i.find('p', 'episode').text.replace('Episode', '')
-        results.append(
-            Anime(url, img, lang, title, episode)
+        url = (
+            "/anime"
+            + i.find("a").get("href").replace("/category/", "").split("-episode-")[0]
         )
+        img = i.find("img").get("src")
+        lang = i.find("div", "type").get("class")[1].replace("ic-", "")
+        title = i.find("a").get("title")
+        episode = i.find("p", "episode").text.replace("Episode", "")
+        results.append(Anime(url, img, lang, title, episode))
     return results
 
 
 def get_html(data):
-    html = ''
+    html = ""
 
     for i in data:
         i: Anime
@@ -60,11 +59,11 @@ def get_html(data):
         x = ANIME_POS.format(
             i.url,
             i.lang,
-            'Ep '+str(i.episode).strip(),
+            "Ep " + str(i.episode).strip(),
             i.img,
             i.title,
-            f'Latest {i.lang}',
-            'HD'
+            f"Latest {i.lang}",
+            "HD",
         )
         html += x
 
