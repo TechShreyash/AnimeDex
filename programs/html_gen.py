@@ -81,7 +81,7 @@ def animeRecHtml(data):
 def get_trending_html():
     data: dict = requests.get("https://api.animedex.live/top").json().get("top")
     html = ""
-    for id, i in data.items():
+    for id, i in data:
         try:
             img = i[5]
             title = i[0]
