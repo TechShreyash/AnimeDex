@@ -1,5 +1,3 @@
-<p align="center"><a href="https://animedex.live"><img src="./static/img/home.png"></a></p> 
-
 <h1 align="center"><a href="https://animedex.live"><img src="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/headerr.png"></a></h1>
 <h2 align="center"><a href="https://animedex.live"><b>Watch Animes Online For Free</b></a></h4>
 
