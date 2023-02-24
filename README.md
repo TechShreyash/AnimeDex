@@ -52,11 +52,11 @@
 
 <br>
 
-<img src="./static/img/home.png">
+<img src="./screenshots/home.jpeg">
 
-<img src="./screenshots/search.png">
+<img src="./screenshots/search.jpeg">
 
-<img src="./screenshots/anime.png">
+<img src="./screenshots/anime.jpeg">
 
 <img src="./screenshots/episode.png">
 
