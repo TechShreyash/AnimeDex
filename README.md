@@ -15,7 +15,7 @@
 
 > Powered By TechZApi
 
-<hr><br>
+<hr>
 
 ### ♻️ Get TechZApi
 
@@ -23,10 +23,9 @@
 - Fill this in env or in config.py
 - Facing a-ny issues let us know at https://t.me/TechZBots_Support
 
-<hr><br>
+<hr>
 
 ### ⚡️ Deploy Your Own
-<br>
 
 - Click Below To Deploy On Vercel
 
@@ -75,30 +74,15 @@
 
 
 ### 👤 Contact Me
-<br>
 
 [![Telegram Channel](https://img.shields.io/static/v1?label=Join&message=Telegram%20Channel&color=blueviolet&style=for-the-badge&logo=telegram&logoColor=violet)](https://telegram.me/TechZBots) [![Telegram Group](https://img.shields.io/static/v1?label=Join&message=Telegram%20Group&color=blueviolet&style=for-the-badge&logo=telegram&logoColor=violet)](https://telegram.me/TechZBots_Support)
 
 <hr>
-<br>
-
-### 📊 AnimeDex Stats
-
-<br>
-
-<img src="https://api.animedex.live/stats/over">
-
-<img src="https://api.animedex.live/stats/day">
-
-<hr>
-<br>
 
 ### ⭐ Credits
 
 * [TechZBots](https://t.me/TechZBots)
 * [TechShreyash](https://github.com/TechShreyash)
-
-<br>
 
 ### ⛑ Important
 
