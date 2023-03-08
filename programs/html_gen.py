@@ -3,6 +3,7 @@ import random
 from programs.gogo import Anime, GoGoApi
 from programs.others import get_atitle, get_genre, get_t_from_u, get_urls
 from programs.anilist import Anilist
+from programs.techzapi import TechZApi
 
 
 def get_genre_html(li):
@@ -15,18 +16,23 @@ def get_genre_html(li):
     return html
 
 
-def get_eps_html(anime, aid=None):
-    if not aid:
-        aid = GoGoApi().search(anime, True)[0].strip()
-    total, data = GoGoApi().get_episodes(aid)
+def get_eps_html(data=None, api: TechZApi = None, anime=None):
+    if not data:
+        anime = api.gogo_search(anime)[0].get("id").strip()
+        data = api.gogo_anime(anime).get("episodes")
+
     x = """<a class="ep-btn" href="{}">{}</a>"""
     html = ""
     pos = 1
+
     for i in data:
         i = i.replace("-episode-", "/")
         html += x.format(f"/episode/{i}", str(pos))
         pos += 1
-    return html, data[0].replace("-episode-", "/")
+
+    if api:
+        return html, anime
+    return html
 
 
 def get_eps_html2(data):
@@ -54,7 +60,7 @@ def animeRecHtml(data):
 
     html = ""
 
-    for i in data:
+    for i in data.get("recommendations").get("edges"):
         i = i.get("node").get("mediaRecommendation")
         img = i.get("coverImage")
         if img:
@@ -78,8 +84,41 @@ def animeRecHtml(data):
     return html
 
 
-def get_trending_html():
-    data: dict = requests.get("https://api.animedex.live/top").json().get("top")
+def animeRecHtml2(data):
+    if not data:
+        return "Not Available"
+
+    if len(data) == 0:
+        return "Not Available"
+
+    html = ""
+
+    for i in data:
+        i = i.get("node").get("mediaRecommendation")
+        
+        img = i.get("coverImage")
+        if img:
+            img = img.get("medium").replace("small", "medium")
+        else:
+            img = i.get("bannerImage")
+        title = get_atitle(i.get("title"))
+        url = get_urls(title)
+        x = ANIME_POS.format(
+            url,
+            str(i.get("meanScore")).strip() + " / 100",
+            "Ep " + str(i.get("episodes")).strip(),
+            img,
+            title,
+            i.get("format"),
+            i.get("status"),
+        )
+        if x not in html:
+            html += x
+
+    return html
+
+
+def get_trending_html(data):
     html = ""
     for id, i in data:
         try:
@@ -94,20 +133,20 @@ def get_trending_html():
     return html
 
 
-def get_search_html(data: Anime):
+def get_search_html(data):
     html = ""
 
     for i in data:
-        if "dub" in i.url.lower():
+        if "dub" in i.get("id").lower():
             d = "DUB"
         else:
             d = "SUB"
         x = ANIME_POS2.format(
-            "/anime/" + i.url,
+            "/anime/" + i.get("id"),
             d,
-            i.img,
-            i.title,
-            i.lang,
+            i.get("img"),
+            i.get("title"),
+            "Released: " + i.get("year"),
         )
         html += x
 
@@ -118,15 +157,14 @@ def get_recent_html(data):
     html = ""
 
     for i in data:
-        i: Anime
-
+        url = i.get("id").split("-episode-")[0]
         x = ANIME_POS.format(
-            i.url,
-            i.lang,
-            "Ep " + str(i.episode).strip(),
-            i.img,
-            i.title,
-            f"Latest {i.lang}",
+            f"/anime/{url}",
+            i.get("lang"),
+            "Ep " + str(i.get("episode")),
+            i.get("img"),
+            i.get("title"),
+            f"Latest {i.get('lang')}",
             "HD",
         )
         html += x
@@ -210,7 +248,7 @@ def episodeHtml(episode, title):
     isSub = episode.get("SUB")
     isDub = episode.get("DUB")
     DL = episode.get("DL")
-    sub = dub = ""
+    sub = dub = dlsub = dldub = ""
     defa = 0
     s, d = 1, 1
 
@@ -235,10 +273,12 @@ def episodeHtml(episode, title):
     if DL:
         link = DL.get("SUB")
         if link:
-            sub += f"""<div class="sitem"> <a class="sobtn download" target="_blank" href="{link}"><i class="fa fa-download"></i>Download</a> </div>"""
+            for n, l in link.items():
+                dlsub += f"""<div class="sitem"> <a class="sobtn download" target="_blank" href="{l}"><i class="fa fa-download"></i>{n}</a> </div>"""
         link = DL.get("DUB")
         if link:
-            dub += f"""<div class="sitem"> <a class="sobtn download" target="_blank" href="{link}"><i class="fa fa-download"></i>Download</a> </div>"""
+            for n, l in link.items():
+                dldub += f"""<div class="sitem"> <a class="sobtn download" target="_blank" href="{l}"><i class="fa fa-download"></i>{n}</a> </div>"""
 
     if sub != "":
         t4 = f"""<div class="server"> <div class="stitle"> <i class="fa fa-closed-captioning"></i>SUB: </div><div class="slist">{sub}</div></div>"""
@@ -250,4 +290,16 @@ def episodeHtml(episode, title):
     else:
         t5 = ""
 
-    return t4 + t5, defa
+    if dlsub != "":
+        t6 = f""" <div class="server"> <div class="stitle"> <i class="fa fa-closed-captioning"></i>SUB: </div><div class="slist">{dlsub}</div></div>"""
+    else:
+        t6 = ""
+
+    if dldub != "":
+        t7 = f""" <div class="server sd"> <div class="stitle"> <i class="fa fa-microphone-alt"></i>DUB: </div><div class="slist">{dldub}</div></div>"""
+    else:
+        t7 = ""
+
+    t8 = f"""<a id="showdl" onclick="showDownload()"><i class="fa fa-download"></i>Download</a><div id="dldiv" class="dldiv"><h4 id="download">Download Links:</h4>{t6}{t7}</div>"""
+
+    return t4 + t5 + t8, defa

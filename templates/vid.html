@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico">
+    <link rel="icon" type="image/x-icon"
+        href="https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico">
     <title>AnimeDex VideoPlayer</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -12,12 +13,12 @@
         body {
             background-color: #000;
         }
-        
+
         .container {
             width: 100%;
             height: 100%;
         }
-        
+
         video {
             width: 100%;
             height: 100%;
@@ -34,12 +35,12 @@
 
     <div class="container">
         <video controls crossorigin playsinline>
-            <source type="application/x-mpegURL" src="{{ m3u8 }}">
+            <source type="application/x-mpegURL" src="https://cors.techzbots.live/{{ m3u8 }}">
         </video>
     </div>
 
     <script>
-        const source = '{{ m3u8 }}';
+        const source = 'https://cors.techzbots.live/{{ m3u8 }}';
         document.addEventListener("DOMContentLoaded", () => {
             const video = document.querySelector("video");
 
@@ -50,7 +51,7 @@
             if (Hls.isSupported()) {
                 const hls = new Hls();
                 hls.loadSource(source);
-                hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+                hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
                     const availableQualities = hls.levels.map((l) => l.height);
 
                     defaultOptions.quality = {

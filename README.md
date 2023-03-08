@@ -3,7 +3,6 @@
 
 <p align="center" > <img alt="GitHub Forks" src="https://img.shields.io/github/forks/TechShreyash/AnimeDex?label=%F0%9F%8D%B4Forks&logoColor=blue&style=social"> <img alt="GitHub Repo Stars" src="https://img.shields.io/github/stars/TechShreyash/AnimeDex?label=%E2%AD%90%EF%B8%8FStars&logoColor=blue&style=social"> </p>
 
-[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/kqf5.svg)](https://betteruptime.com/?utm_source=status_badge)
 
 <hr>
 
@@ -12,7 +11,17 @@
 - Uses Anilist To Get Data
 - And GoGo Anime For Episodes
 - Can Be Deployed To Vercel.com And Repl.it OR Any Other Hosting Service
-- Website : https://animedex.live
+> Website : https://animedex.live
+
+> Powered By TechZApi
+
+<hr><br>
+
+### ♻️ Get TechZApi
+
+- Get from @TechZApiBot on Telegram | https://t.me/TechZApiBot
+- Fill this in env or in config.py
+- Facing a-ny issues let us know at https://t.me/TechZBots_Support
 
 <hr><br>
 
@@ -21,13 +30,15 @@
 
 - Click Below To Deploy On Vercel
 
-    [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex&project-name=anime-dex&repo-name=anime-dex&demo-title=AnimeDex&demo-description=Watch%20Animes%20Online%20For%20Free&demo-url=https%3A%2F%2Fanimedex.live%2F&demo-image=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex%2Fraw%2Fmain%2Fstatic%2Fhome.png)
+  [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex&env=API_KEY&envDescription=Your%20TechZ%20Api%20Key%2C%20Get%20from%20%40TechZApiBot%20on%20Telegram%20&envLink=https%3A%2F%2Ft.me%2FTechZApiBot&project-name=animedex&repository-name=AnimeDex&demo-title=AnimeDex&demo-description=Watch%20Animes%20Online%20For%20Free&demo-url=animedex.live&demo-image=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex%2Fraw%2Fmain%2Fscreenshots%2Fhome.jpeg)
 
     - Demo : https://anime-dex1.vercel.app
 
 - Deploy To Repl.it
 
-    - Just Fork This Repl To Your Account : https://replit.com/@ShreyashDheemar/AnimeDex
+    - Fork This Repl To Your Account : https://replit.com/@ShreyashDheemar/AnimeDex
+    
+    - Fill your TechZApi Key in config.py
 
     - Demo : https://animedex.shreyashdheemar.repl.co
 
@@ -35,6 +46,8 @@
   - Install Requirements
     
     ```pip3 install -r requirements.txt```
+  
+  - Fill you TechZApi Key in config.py
   - Start The Website
 
     ```python3 main.py```

@@ -185,3 +185,4 @@ query ($id: Int, $idMal: Int, $search: String) {
         if data:
             cache["recommend"][anime] = data
         return data
+
