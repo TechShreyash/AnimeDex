@@ -1,6 +1,5 @@
 import requests
 import random
-from programs.gogo import Anime, GoGoApi
 from programs.others import get_atitle, get_genre, get_t_from_u, get_urls
 from programs.anilist import Anilist
 from programs.techzapi import TechZApi
