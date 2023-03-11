@@ -28,7 +28,7 @@ class Gogo:
         data = requests.get(
             f"{self.base}/gogo/episode?id={episode}&api_key={self.api_key}&lang=both"
         ).json()["results"]
-        
+
         if data.get("SUB"):
             data["SUB"] = data["SUB"][1:]
             data["SUB"] = [
@@ -41,7 +41,7 @@ class Gogo:
                 data["DUB"][0] + "&server=1",
                 data["DUB"][0] + "&server=2",
             ] + data["DUB"][1:]
-        
+
         return data
 
     def gogo_stream(self, url):
@@ -54,7 +54,7 @@ class Gogo:
 
 class TechZApi(Gogo):
     def __init__(self, API_KEY) -> None:
-        self.base = "https://techzapi.azurewebsites.net"
+        self.base = "https://api.techzbots.live"
         self.api_key = API_KEY
         super().__init__(API_KEY)
 
