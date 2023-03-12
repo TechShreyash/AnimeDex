@@ -30,17 +30,19 @@ class Gogo:
         ).json()["results"]
 
         if data.get("SUB"):
-            data["SUB"] = data["SUB"][1:]
             data["SUB"] = [
                 data["SUB"][0] + "&server=1",
                 data["SUB"][0] + "&server=2",
-            ] + data["SUB"][1:]
+                data["SUB"][1] + "&server=1",
+                data["SUB"][1] + "&server=2",
+            ] + data["SUB"][2:]
         if data.get("DUB"):
-            data["DUB"] = data["DUB"][1:]
             data["DUB"] = [
                 data["DUB"][0] + "&server=1",
                 data["DUB"][0] + "&server=2",
-            ] + data["DUB"][1:]
+                data["DUB"][1] + "&server=1",
+                data["DUB"][1] + "&server=2",
+            ] + data["DUB"][2:]
 
         return data
 
