@@ -1,0 +1,21 @@
+{
+    "name": "AnimeDex",
+    "description": "Watch Animes Online For Free",
+    "repository": "https://github.com/TechShreyash/AnimeDex",
+    "logo": "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon.ico",
+    "keywords": [
+        "python",
+        "flask website",
+        "anime",
+        "gogo",
+        "anime-website",
+        "anime-downloader",
+        "anime-scraper",
+        "gogoanime",
+        "anime-streaming",
+        "zoro ",
+        "heroku",
+        "gogoanime-scraper",
+        "animedex"
+    ]
+}
