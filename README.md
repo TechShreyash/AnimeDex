@@ -21,7 +21,7 @@
 
 - Get from @TechZApiBot on Telegram | https://t.me/TechZApiBot
 - Fill this in env or in config.py
-- Facing a-ny issues let us know at https://t.me/TechZBots_Support
+- Facing any issues let us know at https://t.me/TechZBots_Support
 
 <hr>
 

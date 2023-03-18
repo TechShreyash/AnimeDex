@@ -17,5 +17,12 @@
         "heroku",
         "gogoanime-scraper",
         "animedex"
-    ]
+    ],
+    "env": {
+        "API_KEY": {
+            "description": "Your TechZApi Key, Get from https://telegram.me/TechZApiBot",
+            "value": "",
+            "required": true
+        }
+    }
 }
