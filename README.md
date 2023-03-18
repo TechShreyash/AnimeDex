@@ -43,7 +43,7 @@
 
 - Deploy To Heroku
   
-  <a href="https://www.heroku.com/deploy/?template=https://github.com/TechShreyash/AnimeDex"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy"></a>
+  <a href="https://www.heroku.com/deploy/?template=https://github.com/TechShreyash/AnimeDex" target="_blank"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy"></a>
 
 - Deploy On Server
   - Install Requirements
