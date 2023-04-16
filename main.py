@@ -12,7 +12,7 @@ from programs.html_gen import (
     get_trending_html,
     slider_gen,
 )
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_file
 from programs.anilist import Anilist
 from programs.others import get_atitle, get_other_title, get_studios, get_t_from_u
 from programs.techzapi import TechZApi
@@ -159,7 +159,8 @@ def get_episode(anime, episode):
         data = TechZApi.gogo_episode(f"{anime}-episode-{episode}")
 
     ep_list = get_eps_html2(ep_list)
-    btn_html = get_selector_btns(f"/episode/{anime}/", int(episode), int(total_eps))
+    btn_html = get_selector_btns(
+        f"/episode/{anime}/", int(episode), int(total_eps))
     ep_html, iframe = episodeHtml(data, f"{anime} - Episode {episode}")
 
     temp = render_template(
@@ -234,6 +235,14 @@ def latest(page):
         data = TechZApi.gogo_latest(page)
         html = get_recent_html(data)
         return {"html": html}
+    except:
+        return {"html": ""}
+
+
+@app.route("/robots.txt")
+def robots_txt():
+    try:
+        return send_file("static/robots.txt")
     except:
         return {"html": ""}
 
