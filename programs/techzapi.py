@@ -61,5 +61,10 @@ class TechZApi(Gogo):
         super().__init__(API_KEY)
 
     def top_animedex(self):
-        data = requests.get("https://animedex-api.herokuapp.com/top").json().get("top")
-        return data
+        try:
+            data = (
+                requests.get("https://animedex-api.herokuapp.com/top").json().get("top")
+            )
+            return data
+        except:
+            pass
