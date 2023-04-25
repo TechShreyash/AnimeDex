@@ -63,7 +63,7 @@ class TechZApi(Gogo):
     def top_animedex(self):
         try:
             data = (
-                requests.get("https://animedex-api.herokuapp.com/top").json().get("top")
+                requests.get("https://api.animedex.live/top").json().get("top")
             )
             return data
         except:
