@@ -10,6 +10,5 @@ Disallow: /
 
 User-agent: *
 Allow: /
-Disallow: /episode/
 Disallow: /emded/
 Disallow: /api/
