@@ -31,7 +31,7 @@ class Gogo:
         global ANIME_CACHE
 
         if anime in ANIME_CACHE:
-            if time.time() - ANIME_CACHE.get(anime, {}).get("time", 0) < 60 * 10:
+            if time.time() - ANIME_CACHE.get(anime, {}).get("time", 0) < 60 * 60:
                 print("from cache")
                 return ANIME_CACHE[anime]["results"]
 
@@ -50,7 +50,7 @@ class Gogo:
             print("from cache")
             return SEARCH_CACHE["query"][query]
 
-        if time.time() - SEARCH_CACHE.get("time", 0) < 60 * 5:
+        if time.time() - SEARCH_CACHE.get("time", 0) < 60 * 60:
             SEARCH_CACHE = {"time": time.time(), "query": {}}
 
         data = requests.get(
