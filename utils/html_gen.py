@@ -1,8 +1,8 @@
 import requests
 import random
-from programs.others import get_atitle, get_genre, get_t_from_u, get_urls
-from programs.anilist import Anilist
-from programs.techzapi import TechZApi
+from utils.others import get_atitle, get_genre, get_t_from_u, get_urls
+from utils.anilist import Anilist
+from utils.techzapi import TechZApi
 
 
 def get_genre_html(li):

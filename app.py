@@ -1,5 +1,5 @@
-from programs.db import update_views, update_watch
-from programs.html_gen import (
+from utils.db import update_views, update_watch
+from utils.html_gen import (
     animeRecHtml,
     animeRecHtml2,
     episodeHtml,
@@ -13,9 +13,9 @@ from programs.html_gen import (
     slider_gen,
 )
 from flask import Flask, render_template, request, redirect, send_file
-from programs.anilist import Anilist
-from programs.others import get_atitle, get_other_title, get_studios, get_t_from_u
-from programs.techzapi import TechZApi
+from utils.anilist import Anilist
+from utils.others import get_atitle, get_other_title, get_studios, get_t_from_u
+from utils.techzapi import TechZApi
 from config import API_KEY
 
 app = Flask(__name__)
