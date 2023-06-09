@@ -91,6 +91,9 @@ class Gogo:
         return data["results"]
 
 
+TOP_CACHE = {}
+
+
 class TechZApi(Gogo):
     def __init__(self, API_KEY) -> None:
         self.base = "https://techzapi2.herokuapp.com"
@@ -98,10 +101,16 @@ class TechZApi(Gogo):
         super().__init__(API_KEY)
 
     def top_animedex(self):
+        global TOP_CACHE
+
+        if time.time() - TOP_CACHE.get("time", 0) < 60 * 60 * 24:
+            print("from cache")
+            return TOP_CACHE["results"]
         try:
             data = (
                 requests.get("https://animedexapi2.herokuapp.com/top").json().get("top")
             )
+            TOP_CACHE = {"time": time.time(), "results": data}
             return data
         except:
             pass
