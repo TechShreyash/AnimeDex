@@ -6,8 +6,6 @@ urls = [
     "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/css/home_min.css",
     "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/css/search_min.css",
     "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/css/video_min.css",
-    "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/home.js",
-    "https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/js/player.js",
 ]
 
 
