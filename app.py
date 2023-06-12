@@ -31,7 +31,7 @@ def favicon():
 
 @app.route("/")
 def home():
-    html = render_template("home.html")
+    html = render_template("home_min.html")
     div1 = get_trending_html(TechZApi.top_animedex())
     div2 = get_recent_html(TechZApi.gogo_latest())
     sliders = slider_gen()
@@ -76,7 +76,7 @@ def get_anime(anime):
         EPISODES = get_eps_html(data=data.get("episodes"))
 
         html = render_template(
-            "anime.html",
+            "anime_min.html",
             IMG=IMG,
             TITLE=TITLE,
             LANG=LANG,
@@ -120,7 +120,7 @@ def get_anime(anime):
         WATCHNOW = "/episode/" + id + "/1"
 
         html = render_template(
-            "anime.html",
+            "anime_min.html",
             IMG=IMG,
             TITLE=TITLE,
             LANG=TYPE,
@@ -164,7 +164,7 @@ def get_episode(anime, episode):
     ep_html, iframe = episodeHtml(data, f"{anime} - Episode {episode}")
 
     temp = render_template(
-        "episode.html",
+        "episode_min.html",
         title=f"{anime} - Episode {episode}",
         heading=anime,
         iframe=iframe,
@@ -187,7 +187,7 @@ def search_anime():
     if anime.endswith("-sub"):
         anime = anime[:-4]
 
-    html = render_template("search.html", aid=anime.replace("+", " "))
+    html = render_template("search_min.html", aid=anime.replace("+", " "))
 
     data = TechZApi.gogo_search(anime)
     display = get_search_html(data)
@@ -226,7 +226,7 @@ def get_embed():
         return redirect(url)
     title = request.args.get("title")
 
-    return render_template("vid.html", m3u8=file, title=title)
+    return render_template("vid_min.html", m3u8=file, title=title)
 
 
 @app.route("/api/latest/<page>")

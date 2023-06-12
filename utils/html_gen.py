@@ -94,7 +94,7 @@ def animeRecHtml2(data):
 
     for i in data:
         i = i.get("node").get("mediaRecommendation")
-        
+
         img = i.get("coverImage")
         if img:
             img = img.get("medium").replace("small", "medium")
