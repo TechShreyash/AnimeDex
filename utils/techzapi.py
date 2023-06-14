@@ -8,7 +8,7 @@ ANIME_CACHE = {}
 
 class Gogo:
     def __init__(self, API_KEY) -> None:
-        self.base = "https://techzapi2.herokuapp.com"
+        self.base = "https://api.techzbots.live"
         self.api_key = API_KEY
 
     def gogo_latest(self, page=1):
@@ -96,7 +96,7 @@ TOP_CACHE = {}
 
 class TechZApi(Gogo):
     def __init__(self, API_KEY) -> None:
-        self.base = "https://techzapi2.herokuapp.com"
+        self.base = "https://api.techzbots.live"
         self.api_key = API_KEY
         super().__init__(API_KEY)
 
@@ -108,7 +108,7 @@ class TechZApi(Gogo):
             return TOP_CACHE["results"]
         try:
             data = (
-                requests.get("https://animedexapi2.herokuapp.com/top").json().get("top")
+                requests.get("https://api.animedex.live/top").json().get("top")
             )
             TOP_CACHE = {"time": time.time(), "results": data}
             return data
