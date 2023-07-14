@@ -108,7 +108,7 @@ class TechZApi(Gogo):
             return TOP_CACHE["results"]
         try:
             data = (
-                requests.get("https://api2.animedex.live/top").json().get("top")
+                requests.get("https://api1.animedex.live/top").json().get("top")
             )
             TOP_CACHE = {"time": time.time(), "results": data}
             return data
