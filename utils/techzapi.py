@@ -8,7 +8,7 @@ ANIME_CACHE = {}
 
 class Gogo:
     def __init__(self, API_KEY) -> None:
-        self.base = "https://api2.techzbots.live"
+        self.base = "https://api1.techzbots.live"
         self.api_key = API_KEY
 
     def gogo_latest(self, page=1):
@@ -96,7 +96,7 @@ TOP_CACHE = {}
 
 class TechZApi(Gogo):
     def __init__(self, API_KEY) -> None:
-        self.base = "https://api2.techzbots.live"
+        self.base = "https://api1.techzbots.live"
         self.api_key = API_KEY
         super().__init__(API_KEY)
 
