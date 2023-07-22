@@ -13,7 +13,7 @@
 - Fast And Responsive
 - Uses Anilist To Get Data
 - And GoGo Anime For Episodes
-- Embed Support New 🔥 ([Read More](https://t.me/TechZBots/586))
+- Embed Support New 🔥 ([Read More](https://TechZBots.t.me/586))
 - Can Be Deployed To Vercel.com And Repl.it OR Any Other Hosting Service
 > Website : https://animedex.live
 
