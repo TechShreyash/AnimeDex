@@ -243,7 +243,7 @@ def slider_gen():
     return html
 
 
-def episodeHtml(episode, title):
+def episodeHtml(episode, title, dl=True):
     isSub = episode.get("SUB")
     isDub = episode.get("DUB")
     DL = episode.get("DL")
@@ -301,4 +301,8 @@ def episodeHtml(episode, title):
 
     t8 = f"""<a id="showdl" onclick="showDownload()"><i class="fa fa-download"></i>Download</a><div id="dldiv" class="dldiv"><h4 id="download">Download Links:</h4>{t6}{t7}</div>"""
 
-    return t4 + t5 + t8, defa
+    html = t4 + t5
+    if dl:
+        html += t8
+
+    return html, defa

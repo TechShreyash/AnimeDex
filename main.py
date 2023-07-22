@@ -158,24 +158,46 @@ def get_episode(anime, episode):
         ep_list = search.get("episodes")
         data = TechZApi.gogo_episode(f"{anime}-episode-{episode}")
 
-    ep_list = get_eps_html2(ep_list)
-    btn_html = get_selector_btns(
-        f"/episode/{anime}/", int(episode), int(total_eps))
-    ep_html, iframe = episodeHtml(data, f"{anime} - Episode {episode}")
+    if str(request.args.get("download", True)).lower() == "false":
+        dl = False
+    else:
+        dl = True
 
-    temp = render_template(
-        "episode_min.html",
-        title=f"{anime} - Episode {episode}",
-        heading=anime,
-        iframe=iframe,
-    )
+    if str(request.args.get("selector", True)).lower() == "false":
+        btn_html = ""
+    else:
+        btn_html = get_selector_btns(f"/episode/{anime}/", int(episode), int(total_eps))
+
+    ep_html, iframe = episodeHtml(data, f"{anime} - Episode {episode}", dl=dl)
+
+    if str(request.args.get("embed", False)).lower() == "true":
+        temp = render_template(
+            "embed_min.html",
+            title=f"{anime} - Episode {episode}",
+            heading=anime,
+            iframe=iframe,
+        )
+
+        if str(request.args.get("eplist", False)).lower() == "true":
+            ep_list = get_eps_html2(ep_list)
+            temp = temp.replace(
+                "LISTHTML",
+                "<div class=divo><h2>List Of Episodes:</h2><div class=divo2>EPISOS</div></div>",
+            ).replace("EPISOS", ep_list)
+        else:
+            temp = temp.replace("LISTHTML", "")
+
+    else:
+        ep_list = get_eps_html2(ep_list)
+        temp = render_template(
+            "episode_min.html",
+            title=f"{anime} - Episode {episode}",
+            heading=anime,
+            iframe=iframe,
+        ).replace("EPISOS", ep_list)
 
     update_watch(anime)
-    return (
-        temp.replace("PROSLO", btn_html)
-        .replace("SERVER", ep_html)
-        .replace("EPISOS", ep_list)
-    )
+    return temp.replace("PROSLO", btn_html).replace("SERVER", ep_html)
 
 
 @app.route("/search", methods=["GET"])
@@ -219,8 +241,7 @@ def get_embed():
                     file = file.get("source_bk")[0].get("file")
         else:
             file = request.args.get("file")
-    except Exception as e:
-        print(e)
+    except:
         file = request.args.get("file")
     if not file:
         return redirect(url)

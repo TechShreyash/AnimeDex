@@ -1,5 +1,5 @@
-<h1 align="center"><a href="https://home.animedex.live"><img src="https://socialify.git.ci/TechShreyash/AnimeDex/image?description=1&font=Jost&forks=1&issues=1&logo=https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon-5.png&name=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark"></a></h1>
-<h2 align="center"><a href="https://home.animedex.live"><b>Watch Animes Online For Free</b></a></h4>
+<h1 align="center"><a href="https://animedex.live"><img src="https://socialify.git.ci/TechShreyash/AnimeDex/image?description=1&font=Jost&forks=1&issues=1&logo=https://cdn.jsdelivr.net/gh/TechShreyash/AnimeDex@main/static/img/favicon-5.png&name=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark"></a></h1>
+<h2 align="center"><a href="https://animedex.live"><b>Watch Animes Online For Free</b></a></h4>
 
 <hr>
 
@@ -13,8 +13,9 @@
 - Fast And Responsive
 - Uses Anilist To Get Data
 - And GoGo Anime For Episodes
+- Embed Support New 🔥 ([Read More](https://t.me/TechZBots/586))
 - Can Be Deployed To Vercel.com And Repl.it OR Any Other Hosting Service
-> Website : https://home.animedex.live
+> Website : https://animedex.live
 
 > Powered By TechZApi
 
@@ -34,7 +35,7 @@
 
   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex&env=API_KEY&envDescription=Your%20TechZ%20Api%20Key%2C%20Get%20from%20%40TechZApiBot%20on%20Telegram%20&envLink=https%3A%2F%2Ft.me%2FTechZApiBot&project-name=animedex&repository-name=AnimeDex&demo-title=AnimeDex&demo-description=Watch%20Animes%20Online%20For%20Free&demo-url=animedex.live&demo-image=https%3A%2F%2Fgithub.com%2FTechShreyash%2FAnimeDex%2Fraw%2Fmain%2Fscreenshots%2Fhome.jpeg)
 
-    - Demo : https://home.animedex.live
+    - Demo : https://animedex.live
 
 - Deploy To Repl.it
 
@@ -57,7 +58,7 @@
   - Start The Website
 
     ```python3 main.py```
-  - Demo : https://home.animedex.live
+  - Demo : https://animedex.live
 
   - Need Guide : 
     - https://docs.digitalocean.com/tutorials/app-deploy-flask-app/
